@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
 
-export default class OtherScreen extends React.Component {
+export default class SettingsScreen extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -10,12 +10,7 @@ export default class OtherScreen extends React.Component {
           title="Go to Home"
           onPress={() => this.props.navigation.navigate('HomeScreen')}
         />
-        <Button
-          title="Go to Settings"
-          onPress={() => this.props.navigation.navigate('SettingsScreen')}
-        />
       </View>
     );
   }
 }
-
