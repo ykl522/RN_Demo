@@ -74,7 +74,16 @@ function getHeader(navigation) {
         <Image style={{width: 50 * pt, height: 50 * pt}} source={require('./image/Back-icon.png')}/>
       </TouchableOpacity>
       {
-        navigation.state && navigation.state.params ? <Text style={{flex: 1, textAlign: 'center' }}>{navigation.state.params.title}</Text> : null
+        navigation.state && navigation.state.params ? 
+        <TouchableOpacity 
+          style={{flex: 1}}
+          onPress={() => {
+              alert('--' + JSON.stringify(navigation.state))
+            }
+          }
+        >
+          <Text style={{textAlign: 'center' }}>{navigation.state.params.title}</Text>
+        </TouchableOpacity> : null
       }
       <View style={{width: 90 * pt}}/> 
     </View>
@@ -134,13 +143,75 @@ const RootStack = createStackNavigator(
 
 const AppContainer = createAppContainer(RootStack);
 
+const prevGetStateForActionHomeStack = AppContainer.router.getStateForAction
+  AppContainer.router.getStateForAction = (action, state) => {
+  if (state && action.type === 'PopSomePageAndThenPush') {
+    // 返回前面几层后，再进入新页面（popPageNum 表示要移掉的页面数）
+    if (!action.popPageNum || action.popPageNum <= 0 || state.routes.length <= action.popPageNum) {
+      // console.warn(`tnw error: wrong popPageNum: ${action.popPageNum}`)
+      return state
+    }
+    const routes = state.routes.slice(0, state.routes.length - action.popPageNum)
+    routes.push(action)
+    return {
+      ...state,
+      routes,
+      index: routes.length - 1
+    }
+  }
+  return prevGetStateForActionHomeStack(action, state)
+}
+
+const previousGetActionForPathAndParams =
+  AppContainer.router.getActionForPathAndParams;
+
+Object.assign(AppContainer.router, {
+  getActionForPathAndParams(path, params) {
+    // if (path === 'my/custom/path' && params.magic === 'yes') {
+    //   // returns a profile navigate action for /my/custom/path?magic=yes
+    //   return NavigationActions.navigate({
+    //     routeName: 'Profile',
+    //     action: NavigationActions.navigate({
+    //       // This child action will get passed to the child router
+    //       // ProfileScreen.router.getStateForAction to get the child
+    //       // navigation state.
+    //       routeName: 'Friends',
+    //     }),
+    //   });
+    // }
+    return previousGetActionForPathAndParams(path, params);
+  },
+});
+
 export default class App extends React.Component {
+
+  constructor (props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    // const router = this.navigatorRef?.router
+    // alert(JSON.stringify(router))
+  }
+
   render() {
+    const { navigation } = this.props;
     return (
       <SafeAreaProvider>
-        <AppContainer ref={navigatorRef => {
-          Actions.setNavigation(navigatorRef)
-        }} />
+        <AppContainer 
+          {...this.navigator?.state?.nav?.routes[1]?.params} 
+          onNavigationStateChange={(prevState, newState, action)=>{
+            // alert('[1]---' + JSON.stringify(prevState)  + '\n[2]---' + JSON.stringify(newState) + '\n[3]---' + JSON.stringify(action))
+            // const router = this.navigator?.state?.nav?.routes[1]
+            // alert(JSON.stringify(router))
+          }} 
+          uriPrefix='/app'
+          navigation={navigation} 
+          ref={navigatorRef => {
+            this.navigator = navigatorRef
+            Actions.setNavigation(navigatorRef)
+          }} 
+        /> 
       </SafeAreaProvider>)
   }
 }

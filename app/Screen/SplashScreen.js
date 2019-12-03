@@ -6,7 +6,7 @@ export default class SplashScreen extends React.Component {
 
   constructor (props) {
     super(props)
-    Actions.setNavigation(this.props.navigation)
+    // Actions.setNavigation(this.props.navigation)
   }
 
   componentDidMount(){
