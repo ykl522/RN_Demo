@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Button, TextInput } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view'
 import Actions from '../util/Actions'
-import AsyncStorage from '../util/AsyncStorage'
+import AsyncStorage from '../util/Storage'
 
 let text
 

@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-community/async-storage'
 
 class Storage {
 	constructor () {
-
+		
 	}
 
 	async set(key, value) {
