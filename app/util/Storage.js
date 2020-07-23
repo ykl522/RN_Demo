@@ -1,26 +1,23 @@
-import AsyncStorage from '@react-native-community/async-storage'
+import AsyncStorage from '@react-native-community/async-storage';
 
 class Storage {
-	constructor () {
-		
-	}
+  constructor() {}
 
-	async set(key, value) {
-		try {
-	    await AsyncStorage.setItem(key, value)
-	  } catch (e) {
-	    // saving error
-	  }
-	}
+  async set(key, value) {
+    try {
+      await AsyncStorage.setItem(key, value);
+    } catch (e) {
+      // saving error
+    }
+  }
 
-	async get(key) {
-		try {
-	    return await AsyncStorage.getItem(key)
-	  } catch(e) {
-	    // error reading value
-	  }
-	}
-
+  async get(key) {
+    try {
+      return await AsyncStorage.getItem(key);
+    } catch (e) {
+      // error reading value
+    }
+  }
 }
 
-export default new Storage()
+export default new Storage();
