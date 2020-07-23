@@ -17,6 +17,7 @@ import OtherScreen from './screen/OtherScreen';
 import LoginScreen from './screen/LoginScreen';
 import RegisterScreen from './screen/RegisterScreen';
 import SettingsScreen from './screen/SettingsScreen';
+import WebViewScreen from './screen/WebViewScreen';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {useSafeArea} from 'react-native-safe-area-context';
 import Actions from './util/Actions';
@@ -104,7 +105,7 @@ function getHeader(navigation) {
     <View
       style={{
         flexDirection: 'row',
-        height: 190 * pt,
+        height: 60 * pt,
         alignItems: 'center',
         paddingTop: isIphoneX() ? 80 * pt : 0,
         padding: 0,
@@ -137,14 +138,14 @@ function getHeader(navigation) {
 }
 
 export function isIphoneX() {
-  const dimen = Dimensions.get('window');
+  const window = Dimensions.get('window');
   return (
     Platform.OS === 'ios' &&
     !Platform.isPad &&
     !Platform.isTVOS &&
-    (dimen.height === 812 ||
-      dimen.width === 812 ||
-      (dimen.height === 896 || dimen.width === 896))
+    (window.height === 812 ||
+      window.width === 812 ||
+      (window.height === 896 || window.width === 896))
   );
 }
 
@@ -156,14 +157,13 @@ function _getCustomHeader(key, screen, title) {
         screen: screen,
         navigationOptions: navigation => {
           // alert(JSON.stringify(navigation))
-          let newNvigation = navigation.navigation;
-          if (newNvigation.state) {
-            newNvigation.state.params = newNvigation.state.params || {};
-            newNvigation.state.params.title =
-              newNvigation.state.params.title || title;
+          let newNavigation = navigation.navigation;
+          if (newNavigation.state) {
+            newNavigation.state.params = newNavigation.state.params || {};
+            newNavigation.state.params.title =
+              newNavigation.state.params.title || title || '';
           }
-
-          return {header: getHeader(newNvigation)};
+          return {header: getHeader(newNavigation)};
         },
       },
     },
@@ -174,7 +174,7 @@ function _getCustomHeader(key, screen, title) {
 }
 
 const deviceWidth = Dimensions.get('window').width;
-const pt = Platform.OS === 'ios' ? deviceWidth / 750 : pt;
+const pt = Platform.OS === 'ios' ? deviceWidth / 750 : 1;
 
 const RootStack = createStackNavigator(
   {
@@ -185,6 +185,7 @@ const RootStack = createStackNavigator(
     },
     RegisterScreen: _getCustomHeader('RegisterScreen', RegisterScreen, '注册'),
     LoginScreen: _getCustomHeader('LoginScreen', LoginScreen, '登录'),
+    WebViewScreen: _getCustomHeader('SettingsScreen', WebViewScreen),
   },
   {
     initialRouteName: 'SplashScreen',

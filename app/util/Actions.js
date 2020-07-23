@@ -24,6 +24,14 @@ class Actions {
     return this.navigation;
   }
 
+  getParams(context) {
+    return context.props.navigation &&
+      context.props.navigation.state &&
+      context.props.navigation.state.params
+      ? context.props.navigation.state.params
+      : {};
+  }
+
   navigate(routeName, params) {
     this.navigation.dispatch(
       NavigationActions.navigate({

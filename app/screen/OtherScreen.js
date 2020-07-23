@@ -2,6 +2,7 @@ import React from 'react';
 import {View, Text, Button, FlatList} from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import Network from '../util/Network';
+import Actions from '../util/Actions';
 
 export default class OtherScreen extends React.Component {
   constructor(props) {
@@ -33,11 +34,20 @@ export default class OtherScreen extends React.Component {
           />
           <Button
             title="Go to Home"
-            onPress={() => this.props.navigation.navigate('HomeScreen')}
+            onPress={() => Actions.navigate('HomeScreen')}
           />
           <Button
             title="Go to Settings"
-            onPress={() => this.props.navigation.navigate('SettingsScreen')}
+            onPress={() => Actions.navigate('SettingsScreen')}
+          />
+          <Button
+            title="Go to WebView"
+            onPress={() =>
+              Actions.navigate('WebViewScreen', {
+                title: '百度',
+                url: 'https://www.baidu.com',
+              })
+            }
           />
         </View>
       </SafeAreaView>

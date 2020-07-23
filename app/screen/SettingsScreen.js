@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
+import Actions from '../util/Actions';
 
 export default class SettingsScreen extends React.Component {
   render() {
@@ -8,7 +9,7 @@ export default class SettingsScreen extends React.Component {
         <Text>Other Screen</Text>
         <Button
           title="Go to Home"
-          onPress={() => this.props.navigation.navigate('HomeScreen')}
+          onPress={() => Actions.navigate('HomeScreen')}
         />
       </View>
     );
