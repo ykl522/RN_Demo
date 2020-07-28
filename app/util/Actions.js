@@ -24,11 +24,13 @@ class Actions {
     return this.navigation;
   }
 
-  getParams(context) {
+  getParams(context, paramName) {
     return context.props.navigation &&
       context.props.navigation.state &&
       context.props.navigation.state.params
-      ? context.props.navigation.state.params
+      ? paramName
+        ? context.props.navigation.state.params[paramName]
+        : context.props.navigation.state.params
       : {};
   }
 

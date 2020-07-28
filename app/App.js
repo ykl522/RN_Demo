@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Dimensions,
   Platform,
+  BackHandler,
+  ToastAndroid,
 } from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -22,7 +24,7 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 import {useSafeArea} from 'react-native-safe-area-context';
 import Actions from './util/Actions';
 
-const TabBarComponent = props => <BottomTabBar {...props} />;
+const TabBarComponent = (props) => <BottomTabBar {...props} />;
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -66,7 +68,7 @@ const MainStack = createBottomTabNavigator(
     },
   },
   {
-    tabBarComponent: props => (
+    tabBarComponent: (props) => (
       <TabBarComponent {...props} style={{borderTopColor: '#605F60'}} />
     ),
   },
@@ -145,7 +147,8 @@ export function isIphoneX() {
     !Platform.isTVOS &&
     (window.height === 812 ||
       window.width === 812 ||
-      (window.height === 896 || window.width === 896))
+      window.height === 896 ||
+      window.width === 896)
   );
 }
 
@@ -155,7 +158,7 @@ function _getCustomHeader(key, screen, title) {
     {
       [key]: {
         screen: screen,
-        navigationOptions: navigation => {
+        navigationOptions: (navigation) => {
           // alert(JSON.stringify(navigation))
           let newNavigation = navigation.navigation;
           if (newNavigation.state) {
@@ -245,6 +248,7 @@ Object.assign(AppContainer.router, {
 export default class App extends React.Component {
   constructor(props) {
     super(props);
+    this.onBackAndroid = this.onBackAndroid.bind(this);
   }
 
   componentDidMount() {
@@ -259,18 +263,62 @@ export default class App extends React.Component {
         <AppContainer
           {...this.navigator?.state?.nav?.routes[1]?.params}
           onNavigationStateChange={(prevState, newState, action) => {
-            // alert('[1]---' + JSON.stringify(prevState)  + '\n[2]---' + JSON.stringify(newState) + '\n[3]---' + JSON.stringify(action))
+            this.prevState = prevState;
+            // alert(
+            //   '[1]---' +
+            //     JSON.stringify(prevState) +
+            //     '\n[2]---' +
+            //     JSON.stringify(newState) +
+            //     '\n[3]---' +
+            //     JSON.stringify(action),
+            // );
             // const router = this.navigator?.state?.nav?.routes[1]
-            // alert(JSON.stringify(router))
+            // alert(JSON.stringify(router));
           }}
           uriPrefix="/app"
           navigation={navigation}
-          ref={navigatorRef => {
+          ref={(navigatorRef) => {
             this.navigator = navigatorRef;
             Actions.setNavigation(navigatorRef);
           }}
         />
       </SafeAreaProvider>
     );
+  }
+
+  componentWillMount() {
+    if (Platform.OS === 'android') {
+      BackHandler.addEventListener(
+        'hardwareBackPress',
+        this.onBackAndroid.bind(this),
+      );
+    }
+  }
+
+  componentWillUnmount() {
+    if (Platform.OS === 'android') {
+      BackHandler.removeEventListener(
+        'hardwareBackPress',
+        this.onBackAndroid.bind(this),
+      );
+    }
+  }
+
+  onBackAndroid() {
+    if (this.prevState) {
+      if (this.prevState.index != 0) {
+        Actions.pop();
+        return true;
+      } else {
+        if (new Date().getTime() - (this.lastBackTime || 0) > 1000) {
+          ToastAndroid.show('再按一次退出应用', ToastAndroid.SHORT);
+          this.lastBackTime = new Date().getTime();
+          return true;
+        } else {
+          Actions.pop();
+          return false;
+        }
+      }
+    }
   }
 }

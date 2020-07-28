@@ -24,7 +24,7 @@ export default class LoginScreen extends React.Component {
           <TextInput
             placeholder={'请输入用户名'}
             defaultValue={this.props.navigation?.state?.params?.username}
-            onChangeText={textInput => {
+            onChangeText={(textInput) => {
               text = textInput;
             }}
           />
