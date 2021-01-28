@@ -156,6 +156,8 @@ export function isIphoneX() {
   );
 }
 
+
+//参考 https://reactnavigation.org/docs/4.x/stack-navigator#navigationoptions-used-by-stacknavigator
 function _getCustomHeader(key, screen, title) {
   // alert(JSON.stringify(screen + ''))
   return createStackNavigator(
