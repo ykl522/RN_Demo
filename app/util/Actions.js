@@ -35,7 +35,7 @@ class Actions {
   }
 
   navigate(routeName, params) {
-    this.navigation.dispatch(
+    this.navigation && this.navigation.dispatch && this.navigation.dispatch(
       NavigationActions.navigate({
         routeName,
         params,
@@ -44,7 +44,7 @@ class Actions {
   }
 
   pop(key) {
-    this.navigation.goBack(key || null);
+    this.navigation && this.navigation.goBack && this.navigation.goBack(key || null);
   }
 }
 
