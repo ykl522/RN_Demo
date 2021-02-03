@@ -3,6 +3,7 @@ import {View, Text, Button, FlatList} from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import Network from '../util/Network';
 import Actions from '../util/Actions';
+import ToastManager from '../util/ToastManager';
 
 export default class OtherScreen extends React.Component {
   constructor(props) {
@@ -52,6 +53,27 @@ export default class OtherScreen extends React.Component {
                 url: 'https://www.baidu.com',
               })
             }
+          />
+          <Button
+            style={{marginTop: 20}}
+            title="Go to Register..."
+            onPress={() => Actions.navigate('RegisterScreen')}
+          />
+          <Button
+            style={{marginTop: 20}}
+            title="Go to Login..."
+            onPress={() => {
+              AsyncStorage.get('username').then((value) => {
+                Actions.navigate('LoginScreen', {username: value});
+              });
+            }}
+          />
+          <Button
+            style={{marginTop: 20}}
+            title="show Toast"
+            onPress={() => {
+              ToastManager.show('---')
+            }}
           />
         </View>
       </SafeAreaView>

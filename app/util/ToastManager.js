@@ -1,3 +1,8 @@
+
+/**
+ * show close
+ * react-native-easy-toast
+ */
 export default class ToastManager {
 
     static toast;

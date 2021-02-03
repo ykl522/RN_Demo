@@ -25,6 +25,7 @@ import Actions from '../util/Actions';
 import Toast from 'react-native-easy-toast';
 import ToastManager from '../util/ToastManager'
 import { myAlert, myLog, w } from '../util/CStyle';
+import HeadView from '../widget/HeadView';
 
 const TabBarComponent = (props) => <BottomTabBar {...props} />;
 
@@ -60,6 +61,7 @@ const MainStack = createBottomTabNavigator(
         indicatorStyle: {height: 0},
       },
     },
+    // HomeScreen: _getCustomHeader('HomeScreen', HomeScreen, '主页'),
     OtherScreen: {
       screen: OtherStack,
       navigationOptions: {
@@ -106,53 +108,7 @@ const ScreenStack = createStackNavigator(
 
 function getHeader(navigation) {
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        height: 60 * pt,
-        alignItems: 'center',
-        paddingTop: isIphoneX() ? 80 * pt : 0,
-        padding: 0,
-        backgroundColor: '#ff0',
-      }}>
-      <TouchableOpacity
-        style={{paddingLeft: 20 * pt, paddingRight: 20 * pt}}
-        onPress={() => {
-          Actions.pop();
-        }}>
-        <Image
-          style={{width: 50 * pt, height: 50 * pt}}
-          source={require('../image/Back-icon.png')}
-        />
-      </TouchableOpacity>
-      {navigation.state && navigation.state.params ? (
-        <TouchableOpacity
-          style={{flex: 1}}
-          onPress={() => {
-            if(__DEV__){
-              myAlert(navigation.state)
-            }
-          }}>
-          <Text style={{textAlign: 'center'}}>
-            {navigation.state.params.title}
-          </Text>
-        </TouchableOpacity>
-      ) : null}
-      <View style={{width: 90 * pt}} />
-    </View>
-  );
-}
-
-export function isIphoneX() {
-  const window = Dimensions.get('window');
-  return (
-    Platform.OS === 'ios' &&
-    !Platform.isPad &&
-    !Platform.isTVOS &&
-    (window.height === 812 ||
-      window.width === 812 ||
-      window.height === 896 ||
-      window.width === 896)
+    <HeadView navigation={navigation} />
   );
 }
 

@@ -37,8 +37,8 @@ export default class App extends React.Component {
             this.prevState = prevState;
             if(newState.isTransitioning){
               // myAlert(prevState.routes[prevState.routes.length - 1]?.routeName)
-              myLog(newState.index + '--newState--')
-              myLog(prevState.index + '--prevState--')
+              // myLog(newState.index + '--newState--')
+              // myLog(prevState.index + '--prevState--')
               // myLog(newState.routes[newState.routes.length - 1]?)
               // myAlert(newState.routes[newState.routes.length - 1]?.routeName)
               global.routeName = newState.routes[newState.routes.length - 1]?.routeName
