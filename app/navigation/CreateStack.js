@@ -1,13 +1,8 @@
 import React from 'react';
 import {
   StyleSheet,
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
   Dimensions,
   Platform,
-  BackHandler,ToastAndroid
 } from 'react-native';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -16,16 +11,26 @@ import SplashScreen from '../screen/SplashScreen';
 import HomeScreen from '../screen/HomeScreen';
 import OtherScreen from '../screen/OtherScreen';
 import LoginScreen from '../screen/LoginScreen';
+import CopyScreen from '../screen/CopyScreen';
 import RegisterScreen from '../screen/RegisterScreen';
 import SettingsScreen from '../screen/SettingsScreen';
 import WebViewScreen from '../screen/WebViewScreen';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
-import {useSafeArea} from 'react-native-safe-area-context';
-import Actions from '../util/Actions';
-import Toast from 'react-native-easy-toast';
-import ToastManager from '../util/ToastManager'
 import { myAlert, myLog, w } from '../util/CStyle';
 import HeadView from '../widget/HeadView';
+
+//包住界面类，可以直接this.props.xxx取传递的参数
+const mapProps = (SomeComponent) => {
+  return class extends React.Component {
+    render () {
+      const { navigation } = this.props
+      // const { navigation, ...otherProps } = this.props
+      const { state: { params } } = navigation
+      myLog(navigation)
+      myLog(params)
+      return (<SomeComponent{...this.props}{...params} />)
+    }
+  }
+}
 
 const TabBarComponent = (props) => <BottomTabBar {...props} />;
 
@@ -84,7 +89,7 @@ const ScreenStack = createStackNavigator(
     //   screen: MainStack,
     // },
     RegisterScreen: {
-      screen: RegisterScreen,
+      screen: mapProps(RegisterScreen),
       navigationOptions: {
         title: '注册',
         headerStyle: styles.headerStyle,
@@ -148,9 +153,10 @@ const RootStack = createStackNavigator(
     Main: {
       screen: MainStack,
     },
-    RegisterScreen: _getCustomHeader('RegisterScreen', RegisterScreen, '注册'),
+    RegisterScreen: _getCustomHeader('RegisterScreen', mapProps(RegisterScreen), '注册'),
     LoginScreen: _getCustomHeader('LoginScreen', LoginScreen, '登录'),
     WebViewScreen: _getCustomHeader('SettingsScreen', WebViewScreen),
+    CopyScreen: _getCustomHeader('CopyScreen', CopyScreen, 'xxx'),
   },
   {
     initialRouteName: 'SplashScreen',

@@ -57,7 +57,7 @@ export default class OtherScreen extends React.Component {
           <Button
             style={{marginTop: 20}}
             title="Go to Register..."
-            onPress={() => Actions.navigate('RegisterScreen')}
+            onPress={() => Actions.navigate('RegisterScreen', {test: '----'})}
           />
           <Button
             style={{marginTop: 20}}

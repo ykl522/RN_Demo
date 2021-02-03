@@ -197,13 +197,16 @@ export default class HomeScreen extends React.Component {
         <View style={{flex: 1, backgroundColor:'#f0f0f0'}}>
           <HeadView navigation={this.props.navigation} />
           {this._getHeadView({username:'username'})}
-          <View style={{flexDirection: 'row', flexWrap:'wrap', justifyContent: 'center',padding: 30*w}}>
+          <View style={{flexDirection: 'row', flexWrap:'wrap', justifyContent: 'center',margin: 30*w, borderRadius: 10*w, backgroundColor: '#fff'}}>
           <ItemLayout 
             rightHidden
             style={styles.item}
             leftIcon={require('../image/finished.png')}
             leftIconStyle={{width: 120*w, height: 120*w}}
             bottomContent={'hello'}
+            onClick={()=>{
+              Actions.navigate('CopyScreen')
+            }}
           />
           <View style={CommonStyle.line}/>
           <ItemLayout 
@@ -268,6 +271,7 @@ const styles = StyleSheet.create({
     alignItems: 'center', 
     paddingLeft: 20*w,
     paddingRight: 20*w,
-    paddingVertical: 60*w
+    paddingVertical: 60*w,
+    backgroundColor: '#00000000'
   }
 })

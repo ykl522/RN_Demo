@@ -2,6 +2,11 @@ import React from 'react';
 import {View, Text, Button, TextInput} from 'react-native';
 
 export default class RegisterScreen extends React.Component {
+
+  componentDidMount(){
+    alert(this.props.test)
+  }
+
   render() {
     return (
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>

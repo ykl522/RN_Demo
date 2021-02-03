@@ -1,7 +1,7 @@
 import React from 'react'
 import { View,TouchableOpacity,Image,Text,Dimensions } from 'react-native';
 import Actions from '../util/Actions';
-import { w } from '../util/CStyle';
+import { myAlert, w } from '../util/CStyle';
 
 export default class HeadView extends React.PureComponent{
     render(){
@@ -26,7 +26,7 @@ export default class HeadView extends React.PureComponent{
                     }}>
                     <Image
                     style={{width: 40 * w, height: 40 * w}}
-                    source={require('../image/Back-icon.png')}
+                    source={this.props.navigation?.state?.params?.headLeftIcon || require('../image/Back-icon.png')}
                     />
                 </TouchableOpacity>
                 {this.props.navigation?.state?.params ? (
@@ -34,7 +34,7 @@ export default class HeadView extends React.PureComponent{
                     style={{flex: 1}}
                     onPress={() => {
                         if(__DEV__){
-                        myAlert(navigation.state)
+                            myAlert(navigation.state)
                         }
                     }}>
                     <Text style={{textAlign: 'center', fontSize: 30 * w, fontWeight:'bold', color: 'white'}}>
