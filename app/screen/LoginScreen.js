@@ -3,7 +3,7 @@ import {View, Text, Button, TextInput} from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import Actions from '../util/Actions';
 import { w } from '../util/CStyle';
-import AsyncStorage from '../util/Storage';
+import Storage from '../util/Storage';
 
 let text;
 
@@ -49,7 +49,7 @@ export default class LoginScreen extends React.Component {
             title="登录"
             onPress={() => {
               // alert(text)
-              AsyncStorage.set('username', text);
+              Storage.set('username', text);
               Actions.navigate('Main');
               // this.props.navigation?.replace('HomeScreen')
               // alert('---' + JSON.stringify(this.props.navigation))

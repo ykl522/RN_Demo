@@ -4,9 +4,12 @@ import {
   Dimensions,
   Platform,
 } from 'react-native';
+import { myAlert, myLog, w } from '../util/CStyle';
+import HeadView from '../widget/HeadView';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator, BottomTabBar} from 'react-navigation-tabs';
+//------------------------------------Screen-------------------------------------------
 import SplashScreen from '../screen/SplashScreen';
 import HomeScreen from '../screen/HomeScreen';
 import OtherScreen from '../screen/OtherScreen';
@@ -15,8 +18,8 @@ import CopyScreen from '../screen/CopyScreen';
 import RegisterScreen from '../screen/RegisterScreen';
 import SettingsScreen from '../screen/SettingsScreen';
 import WebViewScreen from '../screen/WebViewScreen';
-import { myAlert, myLog, w } from '../util/CStyle';
-import HeadView from '../widget/HeadView';
+//------------------------------------Screen-------------------------------------------
+
 
 //包住界面类，可以直接this.props.xxx取传递的参数
 const mapProps = (SomeComponent) => {

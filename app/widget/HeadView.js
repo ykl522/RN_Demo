@@ -34,7 +34,7 @@ export default class HeadView extends React.PureComponent{
                     style={{flex: 1}}
                     onPress={() => {
                         if(__DEV__){
-                            myAlert(navigation.state)
+                            myAlert(this.props.navigation.state)
                         }
                     }}>
                     <Text style={{textAlign: 'center', fontSize: 30 * w, fontWeight:'bold', color: 'white'}}>

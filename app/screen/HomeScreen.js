@@ -6,7 +6,6 @@ import {
 } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import Actions from '../util/Actions';
-import AsyncStorage from '../util/Storage';
 import Drawer from 'react-native-drawer'
 import { myAlert, w, CommonStyle } from '../util/CStyle';
 import ToastManager from '../util/ToastManager';
@@ -24,7 +23,7 @@ export default class HomeScreen extends React.Component {
       language: 'en',
       i18n: 'en'
     }
-    this.props.navigation.setParams({
+    this.props.navigation?.setParams({
       title: 'HOME',
       onLeftClick: ()=>{
         this.drawer?.open()
@@ -32,7 +31,7 @@ export default class HomeScreen extends React.Component {
     });
   }
 
-  componentWillMount() {
+  componentDidMount(){
     if (Platform.OS === 'android' && !this.lastBackTime) {
       BackHandler.addEventListener(
         'hardwareBackPress',
@@ -40,6 +39,15 @@ export default class HomeScreen extends React.Component {
       );
     }
   }
+
+  // UNSAFE_componentWillMount() {
+  //   if (Platform.OS === 'android' && !this.lastBackTime) {
+  //     BackHandler.addEventListener(
+  //       'hardwareBackPress',
+  //       this.onBackAndroid.bind(this),
+  //     );
+  //   }
+  // }
 
   componentWillUnmount() {
     if (Platform.OS === 'android') {

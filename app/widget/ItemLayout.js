@@ -121,7 +121,7 @@ export default class ItemLayout extends React.Component {
 // 类型声明
 ItemLayout.propTypes = {
   rightHidden: PropTypes.bool, // 隐藏右边箭头
-  leftIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.string]), // 左边图标
+  leftIcon: PropTypes.any, // 左边图标
   title: PropTypes.string, // 主标题
   titleStyle: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   rightContent: PropTypes.string, // 主标题右边说明内容

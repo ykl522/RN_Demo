@@ -4,6 +4,7 @@ import SafeAreaView from 'react-native-safe-area-view';
 import Network from '../util/Network';
 import Actions from '../util/Actions';
 import ToastManager from '../util/ToastManager';
+import Storage from '../util/Storage'
 
 export default class OtherScreen extends React.Component {
   constructor(props) {
@@ -63,7 +64,7 @@ export default class OtherScreen extends React.Component {
             style={{marginTop: 20}}
             title="Go to Login..."
             onPress={() => {
-              AsyncStorage.get('username').then((value) => {
+              Storage.get('username').then((value) => {
                 Actions.navigate('LoginScreen', {username: value});
               });
             }}
