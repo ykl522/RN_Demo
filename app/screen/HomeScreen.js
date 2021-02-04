@@ -11,6 +11,7 @@ import { myAlert, w, CommonStyle } from '../util/CStyle';
 import ToastManager from '../util/ToastManager';
 import ItemLayout from '../widget/ItemLayout';
 import HeadView from '../widget/HeadView';
+import BottomDrawer from '../widget/BottomDrawer';
 
 
 let lastBackPressed  = Date.now()
@@ -20,11 +21,12 @@ export default class HomeScreen extends React.Component {
     Actions.setNavigation(this.props.navigation);
     this.state={
       showDrawer: false,
-      language: 'en',
+      language: {_text_: 'English', i18n: 'en'},
       i18n: 'en'
     }
     this.props.navigation?.setParams({
       title: 'HOME',
+      headLeftIcon: require('../image/head/ic_head_drawer.png'),
       onLeftClick: ()=>{
         this.drawer?.open()
       }
@@ -110,96 +112,42 @@ export default class HomeScreen extends React.Component {
           type="overlay"
           negotiatePan
           content={
-            <Drawer
-                type="overlay"
-                ref={c => this.selector = c}
-                side='bottom'
-                openDrawerOffset={0}
-                panCloseMask={0}
-                tapToClose
-                negotiatePan
-                closedDrawerOffset={-3}
-                content={(
-                  <View style={{flex: 1, backgroundColor: '#00000000'}}>
-                    <View style={{flex: 1}}/>
-                    <View style={{flexDirection: 'row', padding: 15*w, backgroundColor: '#fff'}}>
-                      <TouchableOpacity
-                          onPress={()=>{
-                            this.selector.close()
-                          }}
-                        >
-                        <Text style={{fontSize: 30*w}}>Cancel</Text>
-                      </TouchableOpacity>
-                      <View style={{flex: 1}}/>
-                      <TouchableOpacity
-                        onPress={()=>{
-                          this.setState({i18n: this.state.language})
-                          this.selector.close()
-                        }}
-                      >
-                        <Text style={{fontSize: 30*w}} >Comfirm</Text>
-                      </TouchableOpacity>
-                    </View>
-                    <View style={CommonStyle.line_}/>
-                    <View style={{backgroundColor: '#fff'}}>
-                      <TouchableOpacity 
-                        onPress={()=>{
-                          this.setState({language: 'zh'})
-                        }}
-                        style={{flexDirection: 'row', justifyContent: 'center', alignContent: 'center', padding: 30*w, backgroundColor: this.state.language=='zh' ? '#eee': '#00000000'}}>
-                        <Text style={{fontSize: 30*w}}>中文</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity 
-                        onPress={()=>{
-                          this.setState({language: 'en'})
-                        }}
-                        style={{flexDirection: 'row', justifyContent: 'center', alignContent: 'center', padding: 30*w, backgroundColor: this.state.language=='en' ? '#eee': '#00000000'}}>
-                        <Text style={{fontSize: 30*w}}>English</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                )}
-                styles={{
-                  main: {shadowColor: '#000', shadowOpacity: 0.8, shadowRadius: 10},
-                  mainOverlay: {backgroundColor: '#333', opacity: 0},
-                }}
-                tweenHandler={(ratio) => ({
-                  // main: { opacity:(2-ratio)/2 },
-                  mainOverlay: {
-                    opacity: ratio / 2,
-                  }
-                })}
-              >
-            <View style={{flex: 1, backgroundColor: '#f7f6f5'}}>
-              {this._getHeadView({username:'username'}, true)}
-              <ItemLayout 
-                style={{marginTop: 40*w, backgroundColor: '#00000000'}}
-                title={'Language'}
-                titleStyle={{fontWeight: 'bold'}}
-                rightContent={this.state.i18n == 'en' ? 'English' : '中文'}
-                onClick={()=>{
-                  this.selector.open()
-                }}
-              />
-              <ItemLayout 
-                style={{marginTop: 40*w, backgroundColor: '#00000000'}}
-                titleStyle={{fontWeight: 'bold'}}
-                title={'About'}
-                onClick={()=>{
-                  ToastManager.show('***About***')
-                }}
-              />
-              <View style={{flex: 1}}/>
-              <TouchableOpacity 
-                onPress={()=>{
-                  ToastManager.show('---Sign Out---')
-                }}
-                style={{justifyContent: 'center', alignItems: 'center', height: 80*w, backgroundColor: '#fff'}}>
-                <Text style={{fontSize: 30*w}}>Sign Out</Text>
-              </TouchableOpacity>
-                
-            </View>
-            </Drawer>
+            <BottomDrawer
+              ref={ref=>this.selector=ref}
+              data={[{_text_: 'English', i18n: 'en'}, {_text_: '中文', i18n: 'zh'}]}
+              onSelector={(item)=>{
+                this.setState({language: item})
+              }}
+            >
+              <View style={{flex: 1, backgroundColor: '#f7f6f5'}}>
+                {this._getHeadView({username:'username'}, true)}
+                <ItemLayout 
+                  style={{marginTop: 40*w, backgroundColor: '#00000000'}}
+                  title={'Language'}
+                  titleStyle={{fontWeight: 'bold'}}
+                  rightContent={this.state.language._text_}
+                  onClick={()=>{
+                    this.selector.open()
+                  }}
+                />
+                <ItemLayout 
+                  style={{marginTop: 40*w, backgroundColor: '#00000000'}}
+                  titleStyle={{fontWeight: 'bold'}}
+                  title={'About'}
+                  onClick={()=>{
+                    ToastManager.show('***About***')
+                  }}
+                />
+                <View style={{flex: 1}}/>
+                <TouchableOpacity 
+                  onPress={()=>{
+                    ToastManager.show('---Sign Out---')
+                  }}
+                  style={{justifyContent: 'center', alignItems: 'center', height: 80*w, backgroundColor: '#fff'}}>
+                  <Text style={{fontSize: 30*w}}>Sign Out</Text>
+                </TouchableOpacity>
+              </View>
+            </BottomDrawer>
           }
           >
         <View style={{flex: 1, backgroundColor:'#f0f0f0'}}>

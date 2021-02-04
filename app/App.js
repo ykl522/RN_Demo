@@ -88,7 +88,7 @@ export default class App extends React.Component {
   }
 
   onBackAndroid() {
-    myLog('--------------------------', this.prevState.index)
+    // myLog('--------------------------', this.prevState.index)
     if (this.prevState) {
       if (this.prevState.index > 1) {
         Actions.pop();

@@ -44,7 +44,7 @@ export default class OtherScreen extends React.Component {
           />
           <Button
             title="Go to Settings and update title"
-            onPress={() => Actions.navigate('SettingsScreen',{title: '设置1'})}
+            onPress={() => Actions.navigate('SettingsScreen',{title: '设置1',onRightClick:()=>{}})}
           />
           <Button
             title="Go to WebView"

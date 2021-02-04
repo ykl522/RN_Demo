@@ -4,7 +4,6 @@ import {View, Text, Button, TextInput} from 'react-native';
 export default class RegisterScreen extends React.Component {
 
   componentDidMount(){
-    alert(this.props.test)
   }
 
   render() {

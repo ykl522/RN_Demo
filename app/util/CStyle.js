@@ -14,7 +14,8 @@ export const width = Dimensions.get('window').width;
 //手机屏幕的高度
 export const height = Dimensions.get('window').height;
 //计算手机屏幕宽度对应设计图宽度的单位宽度
-export const w = width / designWidth; //unitWidth
+export const w = width / designWidth; //unitWidth 750
+export const w4 = width / 480; //unitWidth 480
 //计算手机屏幕高度对应设计图高度的单位高度
 export const h = height / designHeight; //unitHeight
 
@@ -22,7 +23,7 @@ export const CommonStyle = StyleSheet.create({
     //界面背景
     baseBackgrand: {
       flex: 1,  
-      backgroundColor: '#f5f6f7'
+      backgroundColor: '#f6f6f6'
     },
     //基本文本
     baseText: {

@@ -2,9 +2,9 @@ import React from 'react';
 import {
   StyleSheet,
   Dimensions,
-  Platform,
+  Platform,Text
 } from 'react-native';
-import { myAlert, myLog, w } from '../util/CStyle';
+import { height, myAlert, myLog, w } from '../util/CStyle';
 import HeadView from '../widget/HeadView';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
@@ -28,14 +28,14 @@ const mapProps = (SomeComponent) => {
       const { navigation } = this.props
       // const { navigation, ...otherProps } = this.props
       const { state: { params } } = navigation
-      myLog(navigation)
-      myLog(params)
+      // myLog(navigation)
+      // myLog(params)
       return (<SomeComponent{...this.props}{...params} />)
     }
   }
 }
 
-const TabBarComponent = (props) => <BottomTabBar {...props} />;
+const TabBarComponent = (props) => <BottomTabBar {...props} style={{height: 80, backgroundColor: '#00000000'}} />;
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -47,7 +47,7 @@ const OtherStack = createStackNavigator(
   {
     OtherScreen: {screen: OtherScreen, navigationOptions: {header: null}},
     // SettingsScreen: {screen: SettingsScreen, navigationOptions: {title: '设置'}},
-    SettingsScreen: _getCustomHeader('SettingsScreen', SettingsScreen, '设置'),
+    SettingsScreen: _getCustomHeader('SettingsScreen', SettingsScreen, {title:'设置'}),
   },
   {
     defaultNavigationOptions: {
@@ -64,9 +64,9 @@ const MainStack = createBottomTabNavigator(
       screen: HomeScreen,
       navigationOptions: {
         title: '主页',
-        header: null,
         headerBackTitle: null,
         indicatorStyle: {height: 0},
+        tabBarVisible: true
       },
     },
     // HomeScreen: _getCustomHeader('HomeScreen', HomeScreen, '主页'),
@@ -80,39 +80,17 @@ const MainStack = createBottomTabNavigator(
     },
   },
   {
+    showLabel: true,
     tabBarComponent: (props) => (
       <TabBarComponent {...props} style={{borderTopColor: '#605F60'}} />
     ),
+    tabBarOptions: {
+      activeTintColor: 'tomato',
+      inactiveTintColor: 'gray',
+    },
   },
 );
 
-const ScreenStack = createStackNavigator(
-  {
-    // Main: {
-    //   screen: MainStack,
-    // },
-    RegisterScreen: {
-      screen: mapProps(RegisterScreen),
-      navigationOptions: {
-        title: '注册',
-        headerStyle: styles.headerStyle,
-        headerBackTitle: null,
-      },
-    },
-    LoginScreen: {
-      screen: LoginScreen,
-      navigationOptions: {
-        title: '登录',
-        headerStyle: styles.headerStyle,
-        headerBackTitle: null,
-      },
-    },
-  },
-  {
-    initialRouteName: 'RegisterScreen',
-    headerMode: 'screen',
-  },
-);
 
 function getHeader(navigation) {
   return (
@@ -122,7 +100,7 @@ function getHeader(navigation) {
 
 
 //参考 https://reactnavigation.org/docs/4.x/stack-navigator#navigationoptions-used-by-stacknavigator
-function _getCustomHeader(key, screen, title) {
+function _getCustomHeader(key, screen, params={}, headerHide) {
   // alert(JSON.stringify(screen + ''))
   return createStackNavigator(
     {
@@ -132,11 +110,11 @@ function _getCustomHeader(key, screen, title) {
           // alert(JSON.stringify(navigation))
           let newNavigation = navigation.navigation;
           if (newNavigation.state) {
-            newNavigation.state.params = newNavigation.state.params || {};
+            newNavigation.state.params = newNavigation.state.params || params;
             newNavigation.state.params.title =
-              newNavigation.state.params.title || title || '';
+              newNavigation.state.params.title || params.title || '';
           }
-          return {header: getHeader(newNavigation)};
+          return {header: headerHide?null:getHeader(newNavigation)};
         },
       },
     },
@@ -156,10 +134,10 @@ const RootStack = createStackNavigator(
     Main: {
       screen: MainStack,
     },
-    RegisterScreen: _getCustomHeader('RegisterScreen', mapProps(RegisterScreen), '注册'),
-    LoginScreen: _getCustomHeader('LoginScreen', LoginScreen, '登录'),
-    WebViewScreen: _getCustomHeader('SettingsScreen', WebViewScreen),
-    CopyScreen: _getCustomHeader('CopyScreen', CopyScreen, 'xxx'),
+    RegisterScreen: _getCustomHeader('RegisterScreen', mapProps(RegisterScreen), {title:'注册'}),
+    LoginScreen: _getCustomHeader('LoginScreen', LoginScreen, {title: '登录'}, true),
+    WebViewScreen: _getCustomHeader('WebViewScreen', WebViewScreen),
+    CopyScreen: _getCustomHeader('CopyScreen', CopyScreen, {title:'xxx'}),
   },
   {
     initialRouteName: 'SplashScreen',
