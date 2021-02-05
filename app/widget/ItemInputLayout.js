@@ -38,8 +38,7 @@ export default class ItemInputLayout extends React.Component{
                         style={[styles.text, { marginLeft: 20 * w }]}>{this.props.title}:</Text>}
                     <TextInput
                         {...this.props}
-                        ref={ref => this.TextInput = ref}
-                        style={[styles.text, { flex: 1, marginLeft: 10 * w, paddingVertical: 15 * w }]}
+                        style={[styles.text, { flex: 1, marginLeft: 10 * w, paddingVertical: 15 * w }, this.props.textInputStyle]}
                         value={this.state.text}
                         onChangeText={(text)=>{
                             this.state.text = text
@@ -49,12 +48,12 @@ export default class ItemInputLayout extends React.Component{
                     />
                     {this.props.showRightImage && this.state.text?.length>0 && 
                         <TouchableOpacity 
+                            style={this.props.rightImageParentStyle||{paddingRight: 15*w}}
                             activeOpacity={0.8} 
                             onPress={()=>{
                                 if(this.props.onImgPress){
                                     this.props.onImgPress(this.state.text)
                                 } else{
-                                    // this.TextInput.clear()
                                     this.setState({text: ''})
                                 }
                             }}>
@@ -87,9 +86,8 @@ const styles = StyleSheet.create({
         color: '#4d4d4d'
     }, 
     rightImage:{
-        width: 32 * w, 
-        height: 32 * w, 
-        marginRight: 15 * w
+        width: 50 * w, 
+        height: 50 * w, 
     },
     broder: {
         borderWidth: 1,

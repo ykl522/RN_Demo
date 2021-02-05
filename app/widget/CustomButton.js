@@ -28,7 +28,7 @@ export default class CustomButton extends React.Component {
 
     render(){
         return(
-            <View style={[styles.btnParent, this.props.style]}>
+            <View style={[styles.btnParent, this.props.style || {width: '80%'}]}>
                 <TouchableOpacity 
                     style={[styles.btnContainerAll, {backgroundColor: 'white'}, this.props.btnStyle]} 
                     activeOpacity={0.8}
@@ -56,7 +56,6 @@ const styles = StyleSheet.create({
         height: 100 * w,
         borderColor: '#00000000',
         marginBottom: 20 * w,
-        width: '80%',
         borderRadius: 50 * w,
         borderWidth: 1,
         flexDirection: "row",

@@ -14,6 +14,15 @@ export default class SettingsScreen extends React.Component {
     //     alert('add')
     //   }
     // })
+    this.state={
+      tab1List:[]
+    }
+  }
+
+  componentDidMount(){
+  }
+
+  componentWillUnmount(){
   }
 
   render() {
@@ -44,14 +53,14 @@ export default class SettingsScreen extends React.Component {
                 
               }}
               onPress={()=>{
-
+                this.setState({tab1List: [{number:132321314, value:'---'},{number:2, value:'...'}]})
               }}
               rightButtonText={'Enter'}
             />
         {/** data为接口获取的数组对象 view为显示获取对象中的参数 */}
         <TabViewPager 
           dataList={[
-            {tab:'tab1', data:[{number:132321314, value:'---'},{number:2, value:'...'}],view:[{head:'标题1', key:'number', style:{flex:0.2}},{head:'标题2', key:'value', style:{flex:0.4}},{head:'标题3', key:'value', style:{flex:0.4}}]},
+            {tab:'tab1', data: this.state.tab1List,view:[{head:'标题1', key:'number', style:{flex:0.2}},{head:'标题2', key:'value', style:{flex:0.4}},{head:'标题3', key:'value', style:{flex:0.4}}]},
             {tab:'tab2', data:[{number:1, value:'---'},{number:2, value:'+++'}],view:[{head:'标题1+', key:'number', style:{flex:0.6}},{head:'标题2+', key:'value', style:{flex:0.4}}]},
             {tab:'tabbbbbb3', data:[{number:1, value:'abc'},{number:2, value:'+++'}],view:[{head:'标题1+', key:'number', style:{flex:0.6}},{head:'标题2++++', key:'value', style:{flex:0.4}}]},
             {tab:'tab4', data:[{number:1, value:'大大厉害', message:'code is null'},{number:2, value:'s1212313', message: null},{number:3, value:'6u6uytut', message: null}],view:[{head:'标题1+', key:'number', style:{flex:0.3}},{head:'标题2+', key:'value', style:{flex:0.5}},{head:'标题图片', key:'message', imgs:[require('../image/common/ic_success.png'),require('../image/common/ic_fail.png')], style:{flex:0.2}}]},

@@ -39,27 +39,29 @@ export default class BottomDrawer extends React.PureComponent{
                 content={(
                   <View style={{flex: 1, backgroundColor: '#00000000'}}>
                     <View style={{flex: 1}}/>
-                    <View style={{flexDirection: 'row', padding: 15*w, backgroundColor: '#fff'}}>
+                    <View style={{flexDirection: 'row', backgroundColor: '#fff'}}>
                       <TouchableOpacity
+                          style={{height: 117*w, paddingHorizontal: 31.25*w, justifyContent: 'center'}}
                           onPress={()=>{
                             this.close()
                           }}
                         >
-                        <Text style={{fontSize: 30*w}}>Cancel</Text>
+                        <Text style={{fontSize: 34.375*w}}>Cancel</Text>
                       </TouchableOpacity>
                       <View style={{flex: 1}}/>
                       <TouchableOpacity
+                        style={{height: 117*w, paddingHorizontal: 31.25*w, justifyContent: 'center'}}
                         onPress={()=>{
                         //   this.setState({i18n: this.state.language})
                           this.props.onSelector && this.props.onSelector(this.props.data[this.state.selectorId])
                           this.close()
                         }}
                       >
-                        <Text style={{fontSize: 30*w}} >Comfirm</Text>
+                        <Text style={{fontSize: 34.375*w, color: '#0d8484'}} >Comfirm</Text>
                       </TouchableOpacity>
                     </View>
                     <View style={CommonStyle.line_}/>
-                    <View style={{backgroundColor: '#fff'}}>
+                    <View style={{backgroundColor: '#fff', paddingBottom: 25*w}}>
                         {
                             this.props.data?.map((item, i)=>{
                                 return(
@@ -68,8 +70,8 @@ export default class BottomDrawer extends React.PureComponent{
                                         onPress={()=>{
                                             this.setState({selectorId: i})
                                         }}
-                                        style={{flexDirection: 'row', justifyContent: 'center', alignContent: 'center', padding: 30*w, backgroundColor: this.state.selectorId === i ? '#eee': '#00000000'}}>
-                                        <Text style={{fontSize: 30*w}}>{item._text_}</Text>
+                                        style={{flexDirection: 'row', justifyContent: 'center', alignContent: 'center', padding: 30*w, backgroundColor: this.state.selectorId === i ? '#f6f6f6': '#00000000'}}>
+                                        <Text style={{fontSize: 30*w, color: this.state.selectorId === i ? '#353535': '#999'}}>{item._text_}</Text>
                                     </TouchableOpacity>
                                 )
                             })

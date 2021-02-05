@@ -24,23 +24,25 @@ export default class TabViewPager extends React.PureComponent{
     render(){
         return(
             <View style={[{flex: 1}, this.props.style]}>
-                <View style={styles.nav}>
-                    {this.props.dataList.map((item,index)=>{
-                        return (
-                            <TouchableOpacity style={{width:`${100/this.props.dataList.length}%`}} key={index} activeOpacity={.6} onPress={()=>{
-                                this.setState({
-                                    navActive:index
-                                })
-                                this._goPage(index)
-                            }}>
-                                <View style={styles.NavItem}>
-                                    <Text style={[this.state.navActive==index ? {fontWeight:'bold', color: '#0D8484'} : {color: 'rgba(13, 132, 132, 0.5)'}, CommonStyle.baseText]}>{item.tab + '(' + item.data.length + ')'}</Text>
-                                    {this.state.navActive==index && <View style={[styles.line]}></View> }
-                                </View>
-                            </TouchableOpacity>
-                        )
-                    })}
-                </View>
+                {this.props.dataList && this.props.dataList.length>1 && 
+                    <View style={styles.nav}>
+                        {this.props.dataList.map((item,index)=>{
+                            return (
+                                <TouchableOpacity style={{width:`${100/this.props.dataList.length}%`}} key={index} activeOpacity={.6} onPress={()=>{
+                                    this.setState({
+                                        navActive:index
+                                    })
+                                    this._goPage(index)
+                                }}>
+                                    <View style={styles.NavItem}>
+                                        <Text style={[this.state.navActive==index ? {fontWeight:'bold', color: '#0D8484'} : {color: 'rgba(13, 132, 132, 0.5)'}, CommonStyle.baseText]}>{item.tab + '(' + item.data.length + ')'}</Text>
+                                        {this.state.navActive==index && <View style={[styles.line]}></View> }
+                                    </View>
+                                </TouchableOpacity>
+                            )
+                        })}
+                    </View>
+                }
                 <ViewPager 
                     style={{flex:1, backgroundColor: '#fff'}}
                     ref={this.viewPager}
@@ -97,7 +99,7 @@ export default class TabViewPager extends React.PureComponent{
                     {
                         view?.map((v, i)=>{
                             return(
-                                item[v.key] && !v.imgs ?
+                                !v.imgs ?
                                 <Text key={i} style={[v.style,{textAlign: 'center',color:'#353535',fontSize: 28.125*w}]}>{item[v.key]}</Text>
                                 :
                                 <TouchableOpacity 
@@ -109,7 +111,7 @@ export default class TabViewPager extends React.PureComponent{
                                             ToastManager.show(item[v.key])
                                     }}
                                 >
-                                    <Image resizeMode={'contain'} style={{width:50*w, height:50*w}} source={item[v.key] ? v.imgs[1] : v.imgs[0]}></Image>
+                                    <Image resizeMode={'contain'} style={{width:50*w, height:50*w}} source={v.key && item[v.key] ? v.imgs[1] : v.imgs ? v.imgs[0]:null}></Image>
                                 </TouchableOpacity>
                             )
                         })
