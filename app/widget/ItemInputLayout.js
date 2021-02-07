@@ -35,7 +35,7 @@ export default class ItemInputLayout extends React.Component{
                 {this.props.topTitle && <Text style={[styles.text, {marginBottom: 10 * w,}, this.props.topTitleStyle]}><Text style={{color: 'red'}}>{this.props.required && '*'}</Text>{this.props.topTitle}</Text>}
                 <View style={[styles.item, this.props.showBorder && styles.broder, this.props.inputStyle]}>
                     {this.props.title && <Text
-                        style={[styles.text, { marginLeft: 20 * w }]}>{this.props.title}:</Text>}
+                        style={[styles.text, { marginLeft: 20 * w }]}>{this.props.title}</Text>}
                     <TextInput
                         {...this.props}
                         style={[styles.text, { flex: 1, marginLeft: 10 * w, paddingVertical: 15 * w }, this.props.textInputStyle]}

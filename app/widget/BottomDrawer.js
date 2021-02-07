@@ -6,14 +6,14 @@ import Drawer from 'react-native-drawer'
 import { CommonStyle, w } from '../util/CStyle'
 
 /**
- * data 对象必须带_text_
+ * data[...obj] 对象obj必须带_text_  onSelector(obj)
  */
 export default class BottomDrawer extends React.PureComponent{
 
     constructor(props){
         super(props)
         this.state={
-            selectorId: 0
+            selectorId: this.props.selectorId || 0
         }
     }
 
@@ -46,7 +46,7 @@ export default class BottomDrawer extends React.PureComponent{
                             this.close()
                           }}
                         >
-                        <Text style={{fontSize: 34.375*w}}>Cancel</Text>
+                        <Text style={{fontSize: 34.375*w, color: '#353535'}}>Cancel</Text>
                       </TouchableOpacity>
                       <View style={{flex: 1}}/>
                       <TouchableOpacity
