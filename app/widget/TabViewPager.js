@@ -1,3 +1,7 @@
+/**
+ * TabViewPager
+ * create by ykl on 2021/2/7
+ */
 import React from 'react'
 import { View,StyleSheet,TouchableOpacity,Text,Image,FlatList } from 'react-native'
 import { w,CommonStyle } from '../util/CStyle';
@@ -5,6 +9,8 @@ import ViewPager from '@react-native-community/viewpager';
 import ToastManager from '../util/ToastManager';
 
 /**
+ * nullView 数据为空时显示的内容 可以结合NullView
+ * 
  * dataList=[{tab:'', data:[{...},...], view: [{head:'',key:'',imgs:[require('../...')]},...]},...]
  */
 export default class TabViewPager extends React.PureComponent{
@@ -13,7 +19,8 @@ export default class TabViewPager extends React.PureComponent{
         super(props)
         this.viewPager = React.createRef();
         this.state={
-            navActive: 0
+            navActive: 0,
+            showNullView: false
         }
     }
 
@@ -35,7 +42,7 @@ export default class TabViewPager extends React.PureComponent{
                                     this._goPage(index)
                                 }}>
                                     <View style={styles.NavItem}>
-                                        <Text style={[this.state.navActive==index ? {fontWeight:'bold', color: '#0D8484'} : {color: 'rgba(13, 132, 132, 0.5)'}, CommonStyle.baseText]}>{item.tab + '(' + item.data.length + ')'}</Text>
+                                        <Text style={[this.state.navActive==index ? {fontWeight:'bold', color: '#0D8484'} : {color: 'rgba(13, 132, 132, 0.5)'}, CommonStyle.baseText]}>{item.tab + '(' + (item.data?.length || 0) + ')'}</Text>
                                         {this.state.navActive==index && <View style={[styles.line]}></View> }
                                     </View>
                                 </TouchableOpacity>
@@ -55,7 +62,7 @@ export default class TabViewPager extends React.PureComponent{
                 >
                     {
                         this.props.dataList?.map((tabItem, i)=>{
-                            return(
+                            return tabItem.data?.length > 0 || !this.props.nullView ? (
                                 <FlatList
                                     key={i}
                                     style={{flex: 1}}
@@ -64,7 +71,8 @@ export default class TabViewPager extends React.PureComponent{
                                     data={tabItem.data}
                                     renderItem={({ item }) => this._renderItem(item, tabItem.view)}
                                 />
-                            )
+                            ) : 
+                            this.props.nullView
                         })
                     }
                 </ViewPager>

@@ -5,6 +5,8 @@ import Network from '../util/Network';
 import Actions from '../util/Actions';
 import ToastManager from '../util/ToastManager';
 import Storage from '../util/Storage'
+import BottomDatePicker from '../widget/BottomDatePicker';
+import CustomDialog from '../widget/CustomDialog';
 
 export default class OtherScreen extends React.Component {
   constructor(props) {
@@ -74,6 +76,34 @@ export default class OtherScreen extends React.Component {
             title="show Toast"
             onPress={() => {
               ToastManager.show('---')
+            }}
+          />
+          <Button
+            style={{marginTop: 20}}
+            title="show date selector"
+            onPress={() => {
+              this.BottomDatePicker.open()
+            }}
+          />
+          <Button
+            style={{marginTop: 20}}
+            title="show dialog"
+            onPress={() => {
+              this.CustomDialog._setVisible(true)
+            }}
+          />
+          <BottomDatePicker 
+            ref={ref=>this.BottomDatePicker=ref}
+            onSelector={(date)=>{
+              alert(date)
+            }}
+          />
+          <CustomDialog 
+            ref={ref=>this.CustomDialog=ref}
+            title={'提示'}
+            content={'这只是一个提示，这只是一个提示这只是一个提示'}
+            onOkPress={()=>{
+              ToastManager.show('OK')
             }}
           />
         </View>
