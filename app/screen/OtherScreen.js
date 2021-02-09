@@ -80,6 +80,14 @@ export default class OtherScreen extends React.Component {
           />
           <Button
             style={{marginTop: 20}}
+            title="show error Toast"
+            onPress={() => {
+              global.Toast.setTextStyle({color: '#ff3636'})
+              global.Toast.show('---测试用---------error--------')
+            }}
+          />
+          <Button
+            style={{marginTop: 20}}
             title="show date selector"
             onPress={() => {
               this.BottomDatePicker.open()

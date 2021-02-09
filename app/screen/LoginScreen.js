@@ -70,6 +70,7 @@ export default class LoginScreen extends React.Component {
             />
           </View>
           <CustomButton 
+            style={{alignSelf: 'center', width: '80%'}}
             buttonText={'Sign in'}
             btnStyle={{marginTop: 10 * w}}
             btnTextStyle={{fontSize: 30*w, color: '#336688', fontWeight: 'bold'}}
