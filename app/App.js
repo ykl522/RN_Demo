@@ -62,7 +62,7 @@ export default class App extends React.Component {
             Actions.setNavigation(navigatorRef);
           }}
         />
-        <ToastComponent/>
+        <ToastComponent ref={ref=>global.Toast=ref}/>
       </SafeAreaProvider>
     );
   }
@@ -102,7 +102,7 @@ export default class App extends React.Component {
           BackHandler.exitApp();
           return;
         } else {
-          ToastManager.show('再按一次退出应用');
+          global.Toast.show('再按一次退出应用');
           lastBackPressed = Date.now();
           // Actions.pop();
           // return false;
@@ -113,22 +113,43 @@ export default class App extends React.Component {
     }
   }
 }
-  /*全局toast*/
+  /* 全局toast
+   * global.Toast.setTextStyle({color: '#ff3636'})
+   * global.Toast.show('...........')
+   */
   class ToastComponent extends React.Component {
+    constructor(props){
+      super(props)
+      this.state={
+        textStyle:{}
+      }
+    }
     //防止内存泄漏
     componentWillUnmount() {
-        ToastManager.toast = null;
+        // ToastManager.toast = null;
+    }
+
+    setTextStyle(textStyle){
+      this.setState({textStyle: textStyle})
+    }
+
+    show(text,duration=2000,callback){
+      this.toast.show(text,duration,callback)
+    }
+
+    close(duration){
+      this.toast.close(duration)
     }
   
     render() {
         return (<Toast  
-          style={{backgroundColor:'red', padding: 20 * w}}
-          position='bottom'
+          style={{backgroundColor:'black', padding: 20 * w, borderRadius: 18.75*w, minHeight: 140*w, justifyContent: 'center', alignContent: 'center', padding: 31.25*w}}
+          position='center'
           positionValue={200}
           fadeInDuration={750}
           fadeOutDuration={1000}
           opacity={0.8}
-          textStyle={{color:'white'}} 
-          ref={e => ToastManager.toast = e}/>);
+          textStyle={[{color:'white', fontSize: 34.375*w}, this.state.textStyle]} 
+          ref={e => this.toast = e}/>);
     }
   }

@@ -28,4 +28,9 @@ export default class ToastManager {
         //判断toast对象是否有值才调用close方法
         this.toast && this.toast.close(duration);
     }
+
+
+    static setTextStyle(textStyle){
+        textStyle && global.Toast && global.Toast.setTextStyle && global.Toast.setTextStyle(textStyle)
+    }
 }

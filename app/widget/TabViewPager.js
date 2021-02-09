@@ -115,8 +115,9 @@ export default class TabViewPager extends React.PureComponent{
                                     activeOpacity={0.7}
                                     style={[v.style,{justifyContent: 'center', alignItems: 'center', height: 109.38*w}]} 
                                     onPress={()=>{
-                                        if(item[v.key])
-                                            ToastManager.show(item[v.key])
+                                        if(item[v.key]){
+                                            global.Toast.show(item[v.key])
+                                        }
                                     }}
                                 >
                                     <Image resizeMode={'contain'} style={{width:50*w, height:50*w}} source={v.key && item[v.key] ? v.imgs[1] : v.imgs ? v.imgs[0]:null}></Image>

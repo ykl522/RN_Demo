@@ -38,7 +38,7 @@ export default class BottomDrawer extends React.PureComponent{
                 closedDrawerOffset={-3}
                 content={(
                   <View style={{flex: 1, backgroundColor: '#00000000'}}>
-                    <View style={{flex: 1}}/>
+                    <TouchableOpacity style={{flex: 1}} onPress={()=>{this.close()}} />
                     <View style={{flexDirection: 'row', backgroundColor: '#fff'}}>
                       <TouchableOpacity
                           style={{height: 117*w, paddingHorizontal: 31.25*w, justifyContent: 'center'}}

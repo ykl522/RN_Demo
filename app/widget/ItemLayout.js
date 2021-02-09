@@ -57,7 +57,7 @@ export default class ItemLayout extends React.Component {
                 style={{ color: '#fff', fontSize: 16*w }}>{this.props.titleTag}</Text>
             </View> : null}
         </View>
-        {this.props.showRedDot ? <Image style={{ left: 5*w, width: 72*w, height: 32*w }} resizeMode={'contain'} source={require('../image/common/ic_right_arrow.png')} /> : null}
+        {this.props.showRedDot && <View style={{width: 15*w, height: 15*w, backgroundColor: 'red', borderRadius: 7.5*w, marginLeft: 12*w}} />}
       </View>)
     //标题下面内容
     let titleBottomContent = this.props.titleBottomContent ? (

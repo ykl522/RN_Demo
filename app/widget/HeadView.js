@@ -3,8 +3,21 @@ import { View,TouchableOpacity,Image,Text,Dimensions } from 'react-native';
 import Actions from '../util/Actions';
 import { myAlert, w } from '../util/CStyle';
 
+/**
+ * navigation 和 params必选其一，因为是在前一个界面传的参，所有有些点击事件不好处理可以先设个空方法，再用setParams，或者用下面的params
+ * 
+ * params 自定义标题时使用，参数用于一进界面就显示，this.props.navigation?.setParams 会先显示默认的再闪一下
+ * 
+ * colors 标题校栏渐变色['#ffffff', '#ffffff']
+ */
 export default class HeadView extends React.PureComponent{
+
+    constructor(props){
+        super(props)
+    }
+
     render(){
+        let params = this.props.params || this.props.navigation?.state?.params
         return(
             <View
                 style={{
@@ -18,18 +31,18 @@ export default class HeadView extends React.PureComponent{
                 <TouchableOpacity
                     style={{height: 112.5*w, width: 112.5*w, justifyContent: 'center', alignItems: 'center'}}
                     onPress={() => {
-                    if(this.props.navigation?.state?.params?.onLeftClick){
-                        this.props.navigation.state.params.onLeftClick()
+                    if(params?.onLeftClick){
+                        params.onLeftClick()
                     } else{
                         Actions.pop();
-                    }
-                    }}>
+                    }}}>
                     <Image
-                    style={{width: 65.62 * w, height: 65.62 * w}}
-                    source={this.props.navigation?.state?.params?.headLeftIcon || require('../image/head/ic_head_back.png')}
+                        resizeMode={'contain'}
+                        style={{width: 65.62 * w, height: 65.62 * w}}
+                        source={params?.headLeftIcon || require('../image/head/ic_head_back.png')}
                     />
                 </TouchableOpacity>
-                {this.props.navigation?.state?.params ? (
+                {params ? (
                     <TouchableOpacity
                     style={{flex: 1, alignItems: 'center'}}
                     onPress={() => {
@@ -38,24 +51,23 @@ export default class HeadView extends React.PureComponent{
                         }
                     }}>
                     <Text style={{textAlign: 'center', fontSize: 40.625 * w, fontWeight:'bold', color: 'white'}}>
-                        {this.props.navigation.state.params.title}
+                        {params.title}
                     </Text>
                     </TouchableOpacity>
                 ) : null}
                 {
-                    this.props.navigation?.state?.params?.onRightClick ? 
+                    params?.onRightClick ? 
                     <TouchableOpacity
                         style={{height: 112.5*w, width: 112.5*w, justifyContent: 'center', alignItems: 'center'}}
                         onPress={() => {
-                            if(this.props.navigation?.state?.params?.onRightClick){
-                                this.props.navigation.state.params.onRightClick()
-                            } else{
-                                Actions.pop();
+                            if(params.onRightClick){
+                                params.onRightClick()
                             }
                         }}>
                         <Image
-                        style={{width: 65.62 * w, height: 65.62 * w}}
-                        source={this.props.navigation?.state?.params?.headRightIcon || require('../image/head/ic_head_add.png')}
+                            resizeMode={'contain'}
+                            style={{width: 65.62 * w, height: 65.62 * w}}
+                            source={params?.headRightIcon || require('../image/head/ic_head_add.png')}
                         />
                 </TouchableOpacity> :<View style={{width: 112.5*w}} />
                 }

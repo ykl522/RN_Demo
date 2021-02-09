@@ -75,7 +75,7 @@ export default class OtherScreen extends React.Component {
             style={{marginTop: 20}}
             title="show Toast"
             onPress={() => {
-              ToastManager.show('---')
+              global.Toast.show('---测试用-----------------')
             }}
           />
           <Button
