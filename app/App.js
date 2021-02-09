@@ -120,8 +120,9 @@ export default class App extends React.Component {
   class ToastComponent extends React.Component {
     constructor(props){
       super(props)
+      this.defaultTextStyle={color:'white', fontSize: 34.375*w}
       this.state={
-        textStyle:{}
+        textStyle:this.defaultTextStyle
       }
     }
     //防止内存泄漏
@@ -134,7 +135,13 @@ export default class App extends React.Component {
     }
 
     show(text,duration=2000,callback){
-      this.toast.show(text,duration,callback)
+      this.toast.show(text,duration,()=>{
+        if(JSON.stringify(this.state.textStyle) != JSON.stringify(this.defaultTextStyle)){
+          this.state.textStyle=this.defaultTextStyle
+          this.setTextStyle(this.state.textStyle)
+        }
+        callback && callback()
+      })
     }
 
     close(duration){
