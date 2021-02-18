@@ -100,6 +100,28 @@ export default class OtherScreen extends React.Component {
               this.CustomDialog._setVisible(true)
             }}
           />
+          <Button
+            style={{marginTop: 20}}
+            title="show Loading"
+            onPress={() => {
+              //2s aotu dismiss
+              global.Loading.showLoading(2000)
+              // global.Loading.showLoading()
+              // let to = setTimeout(()=>{
+              //   global.Loading.dismissLoading(0)
+              //   clearTimeout(to)
+              // },3000)
+            }}
+          />
+          <Button
+            style={{marginTop: 20}}
+            title="show Loading Toast"
+            onPress={() => {
+              //2s aotu dismiss
+              global.Loading.setLoading('加载完成', require('../image/finished.png'))
+              global.Loading.showLoading(2000)
+            }}
+          />
           <BottomDatePicker 
             ref={ref=>this.BottomDatePicker=ref}
             onSelector={(date)=>{
