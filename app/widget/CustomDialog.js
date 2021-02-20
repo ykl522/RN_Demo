@@ -32,8 +32,8 @@ export default class CustomDialog extends React.Component{
                 transparent={true}
             >
                 <View style={{backgroundColor: 'white', width: '80%', borderRadius: 18*w}}>
-                    <View style={{alignItems:'center', marginVertical: 50*w, paddingHorizontal: 37.5*w}}>
-                        <Text style={{fontSize: 34.38*w, color: '#0d8484',textAlign: 'center', lineHeight: 51*w}}>{this.props.title}</Text>
+                    <View style={{alignItems:'center', marginVertical: 50*w, paddingHorizontal: 37.5*w, minHeight: 102*w, justifyContent: 'center'}}>
+                        {this.props.title && <Text style={{fontSize: 34.38*w, color: '#0d8484',textAlign: 'center', lineHeight: 51*w}}>{this.props.title}</Text>}
                         <Text style={{fontSize: 34.38*w, color: '#353535',textAlign: 'center', lineHeight: 51*w}}>{this.props.content}</Text>
                     </View>
                     <View style={{height: 2.03*w, backgroundColor: '#e5e5e5'}}/>

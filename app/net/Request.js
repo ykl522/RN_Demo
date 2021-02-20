@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {baseURL,Token} from '../net/StaticConstant';
+import {BaseUrl,Token} from '../net/StaticConstant';
 import { myLog } from '../util/CStyle';
 
 const instance = axios.create({
-    baseURL: baseURL,
+    baseURL: BaseUrl,
     timeout: 20000
 });
 
@@ -44,9 +44,10 @@ export const httpPost = async (api,body, config=defaultHeaders) => {
             // myLog(res)
             let ret = {};
             if(res?.data){
+                //这里根据实际情况来修改
                 ret={
                     code: res.status,
-                    data: res.data.Item || res.data,
+                    data: res.data.Data || res.data,
                     msg: res.data.Message
                 }
             }else{
@@ -60,3 +61,16 @@ export const httpPost = async (api,body, config=defaultHeaders) => {
         })
     })
 } 
+
+export const httpTest = async(api,body={}, result={}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   ) => {
+    // myLog(body)
+    // return result
+    return new Promise((resolve, reject) => {
+        let ret = {
+            code:result.Code,
+            data:result.Data,
+            msg:result.Message
+        }
+        resolve(ret)
+    })
+}

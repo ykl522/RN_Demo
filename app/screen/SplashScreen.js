@@ -1,6 +1,7 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
 import Actions from '../util/Actions';
+import Storage from '../util/Storage';
 
 export default class SplashScreen extends React.Component {
   constructor(props) {
@@ -9,15 +10,26 @@ export default class SplashScreen extends React.Component {
   }
 
   componentDidMount() {
-    this.isLogin = true
-    this.timeout = setTimeout(() => {
-      if(this.isLogin){
-        this.props.navigation.replace('Main');
-      } else{
-        this.props.navigation.replace('LoginScreen');
+    Storage.get('username').then((username)=>{
+      global.username = username
+    })
+    Storage.get('UserInfo').then((UserInfo)=>{
+      if(UserInfo){
+        const user = JSON.parse(UserInfo)
+        if(user){
+          global.UserInfo = user
+        }
       }
-      clearTimeout(this.timeout)
-    }, 1000);
+      this.timeout = setTimeout(() => {
+        if(UserInfo){
+          this.props.navigation.replace('Main');
+        } else{
+          this.props.navigation.replace('LoginScreen');
+        }
+        clearTimeout(this.timeout)
+      }, 2000);
+    })
+    
   }
 
   componentWillUnmount() {

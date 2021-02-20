@@ -12,6 +12,7 @@ import ToastManager from '../util/ToastManager';
 import ItemLayout from '../widget/ItemLayout';
 import HeadView from '../widget/HeadView';
 import BottomDrawer from '../widget/BottomDrawer';
+import Storage from '../util/Storage';
 
 
 let lastBackPressed  = Date.now()
@@ -135,13 +136,14 @@ export default class HomeScreen extends React.Component {
                   titleStyle={{fontWeight: 'bold'}}
                   title={'About'}
                   onClick={()=>{
-                    ToastManager.show('***About***')
                   }}
                 />
                 <View style={{flex: 1}}/>
                 <TouchableOpacity 
                   onPress={()=>{
-                    ToastManager.show('---Sign Out---')
+                    Storage.set('UserInfo', '')
+                    Actions.navigate('LoginScreen')
+                    this.drawer.close()
                   }}
                   style={{justifyContent: 'center', alignItems: 'center', height: 80*w, backgroundColor: '#fff'}}>
                   <Text style={{fontSize: 30*w}}>Sign Out</Text>
