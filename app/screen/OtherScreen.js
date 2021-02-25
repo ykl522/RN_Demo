@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Button, FlatList} from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
-import Network from '../util/Network';
+import Network from '../net/Network';
 import Actions from '../util/Actions';
 import ToastManager from '../util/ToastManager';
 import Storage from '../util/Storage'

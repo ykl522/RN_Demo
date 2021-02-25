@@ -45,16 +45,32 @@ export const httpPost = async (api,body, config=defaultHeaders) => {
             let ret = {};
             if(res?.data){
                 //这里根据实际情况来修改
-                ret={
-                    code: res.status,
-                    data: res.data.Data || res.data,
-                    msg: res.data.Message
-                }
+                ret=res.data
             }else{
                 ret={
-                    code:-6,
+                    code:res?.status,
                     data:null,
-                    msg:res.message
+                    msg:res?.message
+                }
+            }
+            resolve(ret)
+        })
+    })
+} 
+
+export const httpGet = async (api, config=defaultHeaders) => {
+    return new Promise((resolve)=>{
+        instance.get(api,config).then(res=>{
+            // myLog(res)
+            let ret = {};
+            if(res?.data){
+                //这里根据实际情况来修改
+                ret=res.data
+            }else{
+                ret={
+                    code:res?.status,
+                    data:null,
+                    msg:res?.message
                 }
             }
             resolve(ret)
