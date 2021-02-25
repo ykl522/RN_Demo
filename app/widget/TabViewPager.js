@@ -13,7 +13,7 @@ import ToastManager from '../util/ToastManager';
  * 
  * dataList=[{tab:'', data:[{...},...], view: [{head:'',key:'',imgs:[require('../...')]},...]},...]
  */
-export default class TabViewPager extends React.PureComponent{
+export default class TabViewPager extends React.Component{
 
     constructor(props){
         super(props)

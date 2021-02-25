@@ -7,6 +7,7 @@ import ToastManager from '../util/ToastManager';
 import Storage from '../util/Storage'
 import BottomDatePicker from '../widget/BottomDatePicker';
 import CustomDialog from '../widget/CustomDialog';
+import LoadingManager from '../util/LoadingManager';
 
 export default class OtherScreen extends React.Component {
   constructor(props) {
@@ -75,15 +76,15 @@ export default class OtherScreen extends React.Component {
             style={{marginTop: 20}}
             title="show Toast"
             onPress={() => {
-              global.Toast.show('---测试用-----------------')
+              ToastManager.show('---测试用-----------------')
             }}
           />
           <Button
             style={{marginTop: 20}}
             title="show error Toast"
             onPress={() => {
-              global.Toast.setTextStyle({color: '#ff3636'})
-              global.Toast.show('---测试用---------error--------')
+              ToastManager.setTextStyle({color: '#ff3636'})
+              ToastManager.show('---测试用---------error--------')
             }}
           />
           <Button
@@ -105,7 +106,7 @@ export default class OtherScreen extends React.Component {
             title="show Loading"
             onPress={() => {
               //2s aotu dismiss
-              global.Loading.showLoading(2000)
+              LoadingManager.show(2000)
               // global.Loading.showLoading()
               // let to = setTimeout(()=>{
               //   global.Loading.dismissLoading(0)

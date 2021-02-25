@@ -16,7 +16,7 @@ export default class ToastManager {
      */
     static show(text, duration=2000, callback) {
         //判断toast对象是否有值才调用show方法
-        this.toast && this.toast.show(text, duration, callback);
+        global.Toast && global.Toast.show(text, duration, callback);
     }
 
     /**
@@ -26,7 +26,7 @@ export default class ToastManager {
      */
     static close(duration) {
         //判断toast对象是否有值才调用close方法
-        this.toast && this.toast.close(duration);
+        global.Toast && global.Toast.close(duration);
     }
 
 
