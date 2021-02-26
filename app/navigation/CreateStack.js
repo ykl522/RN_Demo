@@ -18,6 +18,7 @@ import CopyScreen from '../screen/CopyScreen';
 import RegisterScreen from '../screen/RegisterScreen';
 import SettingsScreen from '../screen/SettingsScreen';
 import WebViewScreen from '../screen/WebViewScreen';
+import TestScreen from '../screen/TestScreen';
 //------------------------------------Screen-------------------------------------------
 
 
@@ -135,6 +136,7 @@ const RootStack = createStackNavigator(
       screen: MainStack,
     },
     RegisterScreen: _getCustomHeader('RegisterScreen', mapProps(RegisterScreen), {title:'注册'}),
+    TestScreen: _getCustomHeader('TestScreen', mapProps(TestScreen), {title:'Test'}),
     LoginScreen: _getCustomHeader('LoginScreen', LoginScreen, {title: '登录'}, true),
     WebViewScreen: _getCustomHeader('WebViewScreen', WebViewScreen),
     CopyScreen: _getCustomHeader('CopyScreen', CopyScreen, {title:'xxx'}),

@@ -136,6 +136,7 @@ export default class HomeScreen extends React.Component {
                   titleStyle={{fontWeight: 'bold'}}
                   title={'About'}
                   onClick={()=>{
+
                   }}
                 />
                 <View style={{flex: 1}}/>
@@ -173,6 +174,9 @@ export default class HomeScreen extends React.Component {
             leftIcon={require('../image/finished.png')}
             leftIconStyle={{width: 120*w, height: 120*w}}
             bottomContent={'hello'}
+            onClick={()=>{
+              Actions.navigate('TestScreen')
+            }}
           />
           <View style={[CommonStyle.line_, {width: 344*w}]}/>
           <View style={[CommonStyle.line_, {width: 344*w}]}/>

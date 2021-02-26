@@ -24,7 +24,15 @@ export default class CopyScreen extends React.Component{
 
     }
 
-    componentWillUnmount(){
+    UNSAFE_componentWillReceiveProps(nextProps){
+
+    }
+
+    shouldComponentUpdate(nextProps, nextState){
+
+    }
+
+    UNSAFE_componentWillUpdate(nextProps, nextState){
 
     }
 
@@ -34,6 +42,14 @@ export default class CopyScreen extends React.Component{
 
             </View>
         )
+    }
+
+    componentDidUpdate(prevProps, prevState){
+
+    }
+
+    componentWillUnmount(){
+
     }
 
 }
