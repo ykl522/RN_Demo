@@ -3,14 +3,15 @@
  * create by ykl on 2021/2/7
  */
 import React from 'react'
-import { View,StyleSheet,TouchableOpacity,Text,Image,FlatList } from 'react-native'
+import { View,StyleSheet,TouchableOpacity,Text,Image } from 'react-native'
 import { w,CommonStyle } from '../util/CStyle';
 import ViewPager from '@react-native-community/viewpager';
 import ToastManager from '../util/ToastManager';
+import CustomList from './CustomList';
 
 /**
  * nullView 数据为空时显示的内容 可以结合NullView
- * 
+ * hideLength 隐藏标题上长度
  * dataList=[{tab:'', data:[{...},...], view: [{head:'',key:'',imgs:[require('../...')]},...]},...]
  */
 export default class TabViewPager extends React.Component{
@@ -20,7 +21,7 @@ export default class TabViewPager extends React.Component{
         this.viewPager = React.createRef();
         this.state={
             navActive: 0,
-            showNullView: false
+            showNullView: false,
         }
     }
 
@@ -42,7 +43,7 @@ export default class TabViewPager extends React.Component{
                                     this._goPage(index)
                                 }}>
                                     <View style={styles.NavItem}>
-                                        <Text style={[this.state.navActive==index ? {fontWeight:'bold', color: '#0D8484'} : {color: 'rgba(13, 132, 132, 0.5)'}, CommonStyle.baseText]}>{item.tab + '(' + (item.data?.length || 0) + ')'}</Text>
+                                        <Text style={[this.state.navActive==index ? {fontWeight:'bold', color: '#0D8484'} : {color: 'rgba(13, 132, 132, 0.5)'}, CommonStyle.baseText]}>{item.tab + (item.hideLength ? '' : ('(' + (item.data?.length || 0) + ')'))}</Text>
                                         {this.state.navActive==index && <View style={[styles.line]}></View> }
                                     </View>
                                 </TouchableOpacity>
@@ -63,11 +64,9 @@ export default class TabViewPager extends React.Component{
                     {
                         this.props.dataList?.map((tabItem, i)=>{
                             return tabItem.data?.length > 0 || !this.props.nullView ? (
-                                <FlatList
+                                <CustomList
                                     key={i}
-                                    style={{flex: 1}}
                                     ListHeaderComponent={this._headView(tabItem.view)}
-                                    keyExtractor={(item, index) => ('' + index)}
                                     data={tabItem.data}
                                     renderItem={({ item }) => this._renderItem(item, tabItem.view)}
                                 />
@@ -80,6 +79,7 @@ export default class TabViewPager extends React.Component{
         )
     }
 
+    //头部 标题
     _headView(view){
         return(
             <View style={styles.tabItemHead}>
@@ -107,20 +107,27 @@ export default class TabViewPager extends React.Component{
                     {
                         view?.map((v, i)=>{
                             return(
-                                !v.imgs ?
-                                <Text key={i} style={[v.style,{textAlign: 'center',color:'#353535',fontSize: 28.125*w}]}>{item[v.key]}</Text>
-                                :
                                 <TouchableOpacity 
                                     key={i} 
                                     activeOpacity={0.7}
                                     style={[v.style,{justifyContent: 'center', alignItems: 'center', height: 109.38*w}]} 
                                     onPress={()=>{
-                                        if(item[v.key]){
-                                            global.Toast.show(item[v.key])
+                                        if(v.onPress) {
+                                            v.onPress(item)
+                                            return
+                                        }
+                                        if(v.imgs && item[v.key]){
+                                            ToastManager.show(item[v.key])
                                         }
                                     }}
                                 >
-                                    <Image resizeMode={'contain'} style={{width:50*w, height:50*w}} source={v.key && item[v.key] ? v.imgs[1] : v.imgs ? v.imgs[0]:null}></Image>
+                                    {
+                                        !v.imgs ?
+                                        <Text key={i} style={[{textAlign: 'center',color: v.onPress ? '#0d8484' : '#353535',fontSize: 28.125*w}]}>{(item[v.key] || '') + (v._key ? '/' : '')}{v._key && <Text style={{color: item[v.key] == item[v._key] ? '#0D8484' : '#FAAD39'}}>{item[v._key]}</Text>}</Text>
+                                        :
+                                        <Image resizeMode={'contain'} style={{width:50*w, height:50*w}} source={v.key && item[v.key] ? v.imgs[1] : v.imgs ? v.imgs[0]:null}></Image>
+                                    }
+                                    
                                 </TouchableOpacity>
                             )
                         })
