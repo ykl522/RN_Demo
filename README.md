@@ -1,7 +1,7 @@
 # RN_Demo
 react native demo
 
-![image](https://github.com/ykl522/RN_Demo/tree/master/app/image/play.gif)
+![image](https://github.com/ykl522/RN_Demo/blob/master/app/image/play.gif)
 
 # 使用组件版本
     "react-native": "0.63.2"
