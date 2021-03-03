@@ -29,6 +29,14 @@ export default class ItemInputLayout extends React.Component{
         editable: true,         //文本输入框是否能输入
       };
 
+    clear(){
+        this.setText('')
+    }
+
+    setText(text){
+        this.setState({text: text})
+    }
+
     render(){
         return (
             <View style={[ this.props.style]}>
@@ -38,7 +46,7 @@ export default class ItemInputLayout extends React.Component{
                         style={[styles.text, { marginLeft: 20 * w }]}>{this.props.title}</Text>}
                     <TextInput
                         {...this.props}
-                        style={[styles.text, { flex: 1, marginLeft: 10 * w, paddingVertical: 15 * w }, this.props.textInputStyle]}
+                        style={[styles.text, { flex: 1, marginLeft: 10 * w, paddingVertical: 0 * w }, this.props.textInputStyle]}
                         value={this.state.text}
                         onChangeText={(text)=>{
                             this.state.text = text
@@ -46,7 +54,7 @@ export default class ItemInputLayout extends React.Component{
                             this.props.onChangeText && this.props.onChangeText(text)
                         }}
                     />
-                    {this.props.showRightImage && this.state.text?.length>0 && 
+                    {this.props.showRightImage && (this.state.text?.length>0 || this.props.showRigthEver) && 
                         <TouchableOpacity 
                             style={this.props.rightImageParentStyle||{paddingRight: 15*w}}
                             activeOpacity={0.8} 

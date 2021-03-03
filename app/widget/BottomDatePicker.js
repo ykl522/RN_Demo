@@ -31,8 +31,8 @@ export default class BottomDatePicker extends React.PureComponent{
         }
     }
 
-    open(){
-      let today = moment()
+    open(defaultDate = new Date()){
+      let today = moment(defaultDate)
       let initState = {
         selectorId: this.props.selectorId || 0,
         selectedYear:1,
@@ -93,8 +93,8 @@ export default class BottomDatePicker extends React.PureComponent{
                   {
                     ['Year','Month','Day','Hour','Minute'].map((item, index)=>{
                       return(
-                        <View key={index} style={{flex: 1, justifyContent:'center', alignItems: 'center'}}>
-                          <Text style={{fontSize: 28.125*w, color: '#999'}}>{item}</Text>
+                        <View key={index} style={{flex: index==0?1.2:1, justifyContent:'center', alignItems: 'center'}}>
+                          <Text style={{fontSize: 32*w, color: '#999'}}>{item}</Text>
                         </View>)
                     })
                   }
@@ -114,9 +114,9 @@ export default class BottomDatePicker extends React.PureComponent{
                           )
                       })
                   } */}
-                  <Picker style={{flex:1, height: 180}}
+                  <Picker style={{flex:1.2, height: 300*w}}
                     selectedValue={this.state.selectedYear}
-                    itemStyle={{color:"black", fontSize:26}}
+                    itemStyle={{color:'#333', fontSize:32*w, fontWeight: 'bold'}}
                     lineColor={'#999999'}
                     onValueChange={(index) => {
                       this.state.selectedYear = index
@@ -130,9 +130,9 @@ export default class BottomDatePicker extends React.PureComponent{
                         <Picker.Item label={value + ''} value={i} key={i}/>
                       ))}
                   </Picker>
-                  <Picker style={{flex:1, height: 180}}
+                  <Picker style={{flex:1, height: 300*w}}
                     selectedValue={this.state.selectedMonth}
-                    itemStyle={{color:"black", fontSize:26}}
+                    itemStyle={{color:'#333', fontSize:32*w}}
                     lineColor={'#999999'}
                     onValueChange={(index) => {
                       this.state.selectedMonth = index
@@ -146,9 +146,9 @@ export default class BottomDatePicker extends React.PureComponent{
                         <Picker.Item label={value + ''} value={i} key={i}/>
                       ))}
                   </Picker>
-                  <Picker style={{flex:1, height: 180}}
+                  <Picker style={{flex:1, height: 300*w}}
                     selectedValue={this.state.selectedDay}
-                    itemStyle={{color:"black", fontSize:26}}
+                    itemStyle={{color:'#333', fontSize:32*w}}
                     lineColor={'#999999'}
                     onValueChange={(index) => {
                       this.setState({selectedDay: index})
@@ -157,9 +157,9 @@ export default class BottomDatePicker extends React.PureComponent{
                         <Picker.Item label={value + ''} value={i} key={i}/>
                       ))}
                   </Picker>
-                  <Picker style={{flex:1, height: 180}}
+                  <Picker style={{flex:1, height: 300*w}}
                     selectedValue={this.state.selectedHour}
-                    itemStyle={{color:"black", fontSize:26}}
+                    itemStyle={{color:'#333', fontSize:32*w}}
                     lineColor={'#999999'}
                     onValueChange={(index) => {
                       this.setState({selectedHour: index})
@@ -168,9 +168,9 @@ export default class BottomDatePicker extends React.PureComponent{
                         <Picker.Item label={value + ''} value={i} key={i}/>
                       ))}
                   </Picker>
-                  <Picker style={{flex:1,height: 180}}
+                  <Picker style={{flex:1,height: 300*w}}
                     selectedValue={this.state.selectedMinute}
-                    itemStyle={{color:"black", fontSize:26}}
+                    itemStyle={{color:'#333', fontSize:32*w}}
                     lineColor={'#999999'}
                     onValueChange={(index) => {
                       this.setState({selectedMinute: index})

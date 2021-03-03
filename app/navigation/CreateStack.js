@@ -7,7 +7,7 @@ import {
 import { height, myAlert, myLog, w } from '../util/CStyle';
 import HeadView from '../widget/HeadView';
 import {createAppContainer} from 'react-navigation';
-import {createStackNavigator} from 'react-navigation-stack';
+import {createStackNavigator,StackViewStyleInterpolator} from 'react-navigation-stack';
 import {createBottomTabNavigator, BottomTabBar} from 'react-navigation-tabs';
 //------------------------------------Screen-------------------------------------------
 import SplashScreen from '../screen/SplashScreen';
@@ -144,8 +144,63 @@ const RootStack = createStackNavigator(
   {
     initialRouteName: 'SplashScreen',
     headerMode: 'none',
+    transitionConfig: ()=>{
+      return {
+        transitionSpec: {
+            duration: 300,
+        },
+        screenInterpolator: (sceneProps) => {
+            const {scene } = sceneProps;
+            const { route,index } = scene;
+            const params = route.params || {};
+            const transition = params.transition;
+            switch(transition){
+              case 'forVertical':
+                return StackViewStyleInterpolator.forVertical(sceneProps)
+              case 'forCutstomTransition':
+                return forCutstomTransition(sceneProps)  
+              default:
+                return StackViewStyleInterpolator.forHorizontal(sceneProps)
+            }
+        },
+    };
+    }
   },
 );
+
+/*
+ * 从左至右动画
+ * */
+const forCutstomTransition = (sceneProps)=>{
+  const { layout, position, scene } = sceneProps;
+
+  const index = scene.index;
+  const inputRange = [index - 1, index, index + 1];
+
+  const width = layout.initWidth;
+  const outputRange = ([width, 0, -width * 0.3])
+  const opacity = position.interpolate({
+      inputRange: ([
+          index - 1,
+          index - 0.99,
+          index,
+          index + 0.99,
+          index + 1,
+      ]),
+      outputRange: ([0, 1, 1, 0.85, 0]),
+  });
+
+  const translateY = 0;
+  const translateX = position.interpolate({
+      inputRange,
+      outputRange,
+  });
+
+  return {
+      opacity,
+      transform: [{ translateX }, { translateY }],
+  };
+};
 
 export const AppContainer = createAppContainer(RootStack);
 

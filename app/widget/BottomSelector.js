@@ -6,7 +6,8 @@ import { CommonStyle, w } from '../util/CStyle'
 import BottomBase from './BottomBase'
 
 /**
- * data[...obj] 对象obj必须带_text_  onSelector(obj)
+ * data[...obj] 如果没有设置textKey对象obj必须带_text_  onSelector(obj)
+ * textKey 对象的显示的参数名，优先取item[textkey]
  */
 export default class BottomSelector extends React.PureComponent{
 
@@ -64,7 +65,7 @@ export default class BottomSelector extends React.PureComponent{
                                       this.setState({selectorId: i})
                                   }}
                                   style={{flexDirection: 'row', justifyContent: 'center', alignContent: 'center', padding: 30*w, backgroundColor: this.state.selectorId === i ? '#f6f6f6': '#00000000'}}>
-                                  <Text style={{fontSize: 30*w, color: this.state.selectorId === i ? '#353535': '#999'}}>{item._text_}</Text>
+                                  <Text style={{fontSize: 30*w, color: this.state.selectorId === i ? '#353535': '#999', fontWeight: this.state.selectorId === i ? 'bold' : 'normal'}}>{this.props.textKey ? item[this.props.textKey] : item._text_}</Text>
                               </TouchableOpacity>
                           )
                       })

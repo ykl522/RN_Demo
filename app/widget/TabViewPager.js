@@ -36,7 +36,11 @@ export default class TabViewPager extends React.Component{
                     <View style={styles.nav}>
                         {this.props.dataList.map((item,index)=>{
                             return (
-                                <TouchableOpacity style={{width:`${100/this.props.dataList.length}%`}} key={index} activeOpacity={.6} onPress={()=>{
+                                <TouchableOpacity 
+                                    style={{width:`${100/this.props.dataList.length}%`}} 
+                                    key={index} 
+                                    activeOpacity={.6} 
+                                    onPress={()=>{
                                     this.setState({
                                         navActive:index
                                     })
@@ -123,7 +127,7 @@ export default class TabViewPager extends React.Component{
                                 >
                                     {
                                         !v.imgs ?
-                                        <Text key={i} style={[{textAlign: 'center',color: v.onPress ? '#0d8484' : '#353535',fontSize: 28.125*w}]}>{(item[v.key] || '') + (v._key ? '/' : '')}{v._key && <Text style={{color: item[v.key] == item[v._key] ? '#0D8484' : '#FAAD39'}}>{item[v._key]}</Text>}</Text>
+                                        <Text key={i} style={[{textAlign: 'center',color: v.onPress ? '#0d8484' : '#353535',fontSize: 28.125*w, paddingHorizontal: 10*w}]}>{(item[v.key] || '') + (v._key ? '/' : '')}{v._key && <Text style={{color: item[v.key] == item[v._key] ? '#0D8484' : '#FAAD39'}}>{item[v._key]}</Text>}</Text>
                                         :
                                         <Image resizeMode={'contain'} style={{width:50*w, height:50*w}} source={v.key && item[v.key] ? v.imgs[1] : v.imgs ? v.imgs[0]:null}></Image>
                                     }
