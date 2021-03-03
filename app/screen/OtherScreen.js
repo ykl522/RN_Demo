@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Button, FlatList} from 'react-native';
+import {ScrollView, Text, Button, FlatList} from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 import Network from '../net/Network';
 import Actions from '../util/Actions';
@@ -26,7 +26,9 @@ export default class OtherScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={{flex: 1}}>
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <ScrollView 
+          style={{flex: 1}} 
+          contentContainerStyle={{alignItems: 'center', justifyContent: 'center'}}>
           <Text>Other Screen</Text>
           <FlatList
             data={this.state.dataSource}
@@ -137,7 +139,7 @@ export default class OtherScreen extends React.Component {
               ToastManager.show('OK')
             }}
           />
-        </View>
+        </ScrollView>
       </SafeAreaView>
     );
   }

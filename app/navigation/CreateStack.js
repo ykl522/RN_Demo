@@ -2,7 +2,7 @@ import React from 'react';
 import {
   StyleSheet,
   Dimensions,
-  Platform,Text
+  Platform,Image
 } from 'react-native';
 import { height, myAlert, myLog, w } from '../util/CStyle';
 import HeadView from '../widget/HeadView';
@@ -36,7 +36,7 @@ const mapProps = (SomeComponent) => {
   }
 }
 
-const TabBarComponent = (props) => <BottomTabBar {...props} style={{height: 80, backgroundColor: '#00000000'}} />;
+const TabBarComponent = (props) => <BottomTabBar {...props} style={{height: 70, backgroundColor: '#00000000', alignItems:'center'}} />;
 
 const styles = StyleSheet.create({
   headerStyle: {
@@ -67,7 +67,16 @@ const MainStack = createBottomTabNavigator(
         title: '主页',
         headerBackTitle: null,
         indicatorStyle: {height: 0},
-        tabBarVisible: true
+        tabBarVisible: true,
+        tabBarIcon: ({focused, horizontal, tintColor}) => {
+          if (focused) {
+              return <Image source={require('../image/common/ic_success.png')}
+                            style={{width: 30, height: 30, tintColor: tintColor}}/>
+          } else {
+              return <Image source={require('../image/common/ic_fail.png')}
+                            style={{width: 30, height: 30, tintColor: tintColor}}/>
+          }
+        }
       },
     },
     // HomeScreen: _getCustomHeader('HomeScreen', HomeScreen, '主页'),
@@ -77,6 +86,15 @@ const MainStack = createBottomTabNavigator(
         title: '其它',
         headerBackTitle: null,
         indicatorStyle: {height: 0},
+        tabBarIcon: ({focused, horizontal, tintColor}) => {
+          if (focused) {
+              return <Image source={require('../image/common/ic_success.png')}
+                            style={{width: 30, height: 30, tintColor: tintColor}}/>
+          } else {
+              return <Image source={require('../image/common/ic_fail.png')}
+                            style={{width: 30, height: 30, tintColor: tintColor}}/>
+          }
+        }
       },
     },
   },
@@ -86,8 +104,16 @@ const MainStack = createBottomTabNavigator(
       <TabBarComponent {...props} style={{borderTopColor: '#605F60'}} />
     ),
     tabBarOptions: {
-      activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
+      activeTintColor: 'tomato',// 选中时tab的label/icon的颜色
+      inactiveTintColor: 'gray',// 未选中的颜色
+      showLabel: true,
+      showIcon: true,
+      tabStyle: { // TabBar内单独tab的样式
+          height: 60
+      },
+      labelStyle: { // TabBar内单独tab的文字样式
+          fontSize: 16,
+      },
     },
   },
 );
