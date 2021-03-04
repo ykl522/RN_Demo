@@ -12,7 +12,7 @@ export default class LoadingManager {
      * 显示
      */
     static show(time) {
-        if(global.Loading){
+        if(global.Loading && !global.Loading.getIsLoading()){
             global.Loading.showLoading(time)
         }
     }

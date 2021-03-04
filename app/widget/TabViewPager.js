@@ -10,8 +10,10 @@ import ToastManager from '../util/ToastManager';
 import CustomList from './CustomList';
 
 /**
- * nullView 数据为空时显示的内容 可以结合NullView
  * hideLength 隐藏标题上长度
+ * 
+ * nullView 数据为空时显示的内容 可以结合NullView, 类型函数传递一个index可作为key
+ * 
  * dataList=[{tab:'', data:[{...},...], view: [{head:'',key:'',imgs:[require('../...')]},...]},...]
  */
 export default class TabViewPager extends React.Component{
@@ -25,6 +27,10 @@ export default class TabViewPager extends React.Component{
         }
     }
 
+    /**
+     * 切换tab
+     * @param  第 index+1 个tab 
+     */
     _goPage(index){
         this.viewPager.current.setPage(index);
     }
@@ -41,11 +47,10 @@ export default class TabViewPager extends React.Component{
                                     key={index} 
                                     activeOpacity={.6} 
                                     onPress={()=>{
-                                    this.setState({
-                                        navActive:index
-                                    })
-                                    this._goPage(index)
-                                }}>
+                                        this.state.navActive = index
+                                        this._goPage(index)
+                                    }}
+                                >
                                     <View style={styles.NavItem}>
                                         <Text style={[this.state.navActive==index ? {fontWeight:'bold', color: '#0D8484'} : {color: 'rgba(13, 132, 132, 0.5)'}, CommonStyle.baseText]}>{item.tab + (item.hideLength ? '' : ('(' + (item.data?.length || 0) + ')'))}</Text>
                                         {this.state.navActive==index && <View style={[styles.line]}></View> }
@@ -60,14 +65,19 @@ export default class TabViewPager extends React.Component{
                     ref={this.viewPager}
                     initialPage={0}
                     onPageSelected={e=>{
+                        this.state.navActive = e.nativeEvent.position
                         this.setState({
                             navActive:e.nativeEvent.position
+                        }, ()=>{
+                            if(this.props.tabSelected){
+                                this.props.tabSelected(this.state.navActive)
+                            }
                         });
                     }}
                 >
                     {
                         this.props.dataList?.map((tabItem, i)=>{
-                            return tabItem.data?.length > 0 || !this.props.nullView ? (
+                            return !this.props.nullView || tabItem.data?.length > 0 ? (
                                 <CustomList
                                     key={i}
                                     ListHeaderComponent={this._headView(tabItem.view)}
@@ -75,7 +85,7 @@ export default class TabViewPager extends React.Component{
                                     renderItem={({ item }) => this._renderItem(item, tabItem.view)}
                                 />
                             ) : 
-                            this.props.nullView
+                            this.props.nullView(i)
                         })
                     }
                 </ViewPager>
@@ -103,6 +113,9 @@ export default class TabViewPager extends React.Component{
         )
     }
 
+    /**
+     * 列表子项
+     */
     _renderItem(item, view){
         return(
             <View style={{marginHorizontal: 31.25*w}}>
