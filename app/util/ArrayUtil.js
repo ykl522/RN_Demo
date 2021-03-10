@@ -29,8 +29,12 @@ class ArrayUtil{
      * @param {*} id 
      */
     _deleteObj(arr,key,id){
-        if(arr && arr.length > 0)
-            return arr.splice(arr.findIndex(arrItem => arrItem[key] === id), 1)
+        if(arr && arr.length > 0){
+            //findIndex()方法返回数组中满足提供的测试函数的第一个元素的索引。否则返回-1
+            let status = arr.findIndex(arrItem => arrItem[key] === id)
+            if(status != -1)
+                return arr.splice(status, 1)
+        }
         return arr
     }
 

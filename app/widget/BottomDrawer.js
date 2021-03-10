@@ -71,7 +71,7 @@ export default class BottomDrawer extends React.PureComponent{
                                             this.setState({selectorId: i})
                                         }}
                                         style={{flexDirection: 'row', justifyContent: 'center', alignContent: 'center', padding: 30*w, backgroundColor: this.state.selectorId === i ? '#f6f6f6': '#00000000'}}>
-                                        <Text style={{fontSize: 30*w, color: this.state.selectorId === i ? '#353535': '#999'}}>{item._text_}</Text>
+                                        <Text style={{fontSize: 30*w, color: this.state.selectorId === i ? '#353535': '#999', fontWeight: this.state.selectorId === i ? 'bold': 'normal'}}>{item._text_}</Text>
                                     </TouchableOpacity>
                                 )
                             })

@@ -20,7 +20,7 @@ export default class CustomList extends React.Component{
             if(this.state.isRefresh && nextProps.data.length == this.pageSize){
                 this.pageIndex = 0
                 this.dataFlag = true
-            } else if(nextProps.data.length - this.props.data.length < this.pageSize){
+            } else if(this.props.data && nextProps.data.length - this.props.data.length < this.pageSize){
                 this.dataFlag = false
             } 
             this.state.isRefresh = false
@@ -53,6 +53,7 @@ export default class CustomList extends React.Component{
                 renderItem={this.props.renderItem}
                 onEndReached={() => this.onEndReached()} // 加载更多
                 onEndReachedThreshold={.2}// 加载更多触发时机
+                ListEmptyComponent={this.props.nullView}
             />
         )
     }

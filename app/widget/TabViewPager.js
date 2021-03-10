@@ -4,7 +4,7 @@
  */
 import React from 'react'
 import { View,StyleSheet,TouchableOpacity,Text,Image } from 'react-native'
-import { w,CommonStyle } from '../util/CStyle';
+import { w,CommonStyle, myLog } from '../util/CStyle';
 import ViewPager from '@react-native-community/viewpager';
 import ToastManager from '../util/ToastManager';
 import CustomList from './CustomList';
@@ -77,15 +77,16 @@ export default class TabViewPager extends React.Component{
                 >
                     {
                         this.props.dataList?.map((tabItem, i)=>{
-                            return !this.props.nullView || tabItem.data?.length > 0 ? (
+                            myLog(tabItem.data?.length)
+                            return  (
                                 <CustomList
-                                    key={i}
+                                    nullView={!tabItem.data || !this.props.nullView || tabItem.data?.length > 0 ? null : this.props.nullView}
+                                    key={'--' + i}
                                     ListHeaderComponent={this._headView(tabItem.view)}
                                     data={tabItem.data}
                                     renderItem={({ item }) => this._renderItem(item, tabItem.view)}
                                 />
-                            ) : 
-                            this.props.nullView(i)
+                            )
                         })
                     }
                 </ViewPager>
