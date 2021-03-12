@@ -13,7 +13,7 @@ import ItemLayout from '../widget/ItemLayout';
 import HeadView from '../widget/HeadView';
 import BottomDrawer from '../widget/BottomDrawer';
 import Storage from '../util/Storage';
-
+import CodePush from "react-native-code-push";
 
 let lastBackPressed  = Date.now()
 export default class HomeScreen extends React.Component {
@@ -162,7 +162,7 @@ export default class HomeScreen extends React.Component {
             style={styles.item}
             leftIcon={require('../image/finished.png')}
             leftIconStyle={{width: 120*w, height: 120*w}}
-            bottomContent={'hello'}
+            bottomContent={'CopyScreen'}
             onClick={()=>{
               Actions.navigate('CopyScreen')
             }}
@@ -173,7 +173,7 @@ export default class HomeScreen extends React.Component {
             style={styles.item}
             leftIcon={require('../image/finished.png')}
             leftIconStyle={{width: 120*w, height: 120*w}}
-            bottomContent={'hello'}
+            bottomContent={'TestScreen'}
             onClick={()=>{
               Actions.navigate('TestScreen')
             }}
@@ -185,7 +185,11 @@ export default class HomeScreen extends React.Component {
             style={styles.item}
             leftIcon={require('../image/finished.png')}
             leftIconStyle={{width: 120*w, height: 120*w}}
-            bottomContent={'hello'}
+            bottomContent={'sync'}
+            onClick={()=>{
+              CodePush.allowRestart()
+              this.sync()
+            }}
           />
           <View style={CommonStyle.line}/>
           <ItemLayout 
@@ -193,12 +197,76 @@ export default class HomeScreen extends React.Component {
             style={styles.item}
             leftIcon={require('../image/finished.png')}
             leftIconStyle={{width: 120*w, height: 120*w}}
-            bottomContent={'hello'}
+            bottomContent={'getUpdateMetadata'}
+            onClick={()=>{
+              this.getUpdateMetadata()
+            }}
           />
           </View>
+          {this.state.syncMessage && <Text style={{padding: 15*w, color: '#333', fontSize: 30*w}}>{this.state.syncMessage + '---' + (this.state.progress ? (this.state.progress?.receivedBytes + '/' + this.state.progress?.totalBytes) : '')}</Text>}
         </View>
         </Drawer>
       </SafeAreaView>
+    );
+  }
+
+  getUpdateMetadata() {
+    CodePush.getUpdateMetadata(CodePush.UpdateState.RUNNING)
+      .then((metadata) => {
+        this.state.metadata = metadata
+        if(metadata){
+          alert(JSON.stringify(metadata,null,2))
+        }
+        this.setState({ syncMessage: metadata ? JSON.stringify(metadata) : "Running binary version...", progress: false });
+      }, (error) => {
+        this.setState({ syncMessage: "Error: " + error, progress: false });
+      });
+  }
+
+  sync() {
+    CodePush.sync(
+      {
+        installMode: CodePush.InstallMode.IMMEDIATE, 
+        updateDialog: {
+          title:'更新提醒',
+          optionalUpdateMessage : '检查到更新！\n' + this.state.metadata?.description,
+          optionalIgnoreButtonLabel: '取消',
+          optionalInstallButtonLabel : '更新',
+          mandatoryContinueButtonLabel: '马上更新',
+          mandatoryUpdateMessage: '检查到重要更新！\n' + this.state.metadata?.description,
+        }
+      },
+      (syncStatus)=>{
+        switch(syncStatus) {
+          case CodePush.SyncStatus.CHECKING_FOR_UPDATE:
+            this.setState({ syncMessage: "Checking for update." });
+            break;
+          case CodePush.SyncStatus.DOWNLOADING_PACKAGE:
+            this.setState({ syncMessage: "Downloading package." });
+            break;
+          case CodePush.SyncStatus.AWAITING_USER_ACTION:
+            this.setState({ syncMessage: "Awaiting user action." });
+            break;
+          case CodePush.SyncStatus.INSTALLING_UPDATE:
+            this.setState({ syncMessage: "Installing update." });
+            break;
+          case CodePush.SyncStatus.UP_TO_DATE:
+            this.setState({ syncMessage: "App up to date.", progress: false });
+            break;
+          case CodePush.SyncStatus.UPDATE_IGNORED:
+            this.setState({ syncMessage: "Update cancelled by user.", progress: false });
+            break;
+          case CodePush.SyncStatus.UPDATE_INSTALLED:
+            this.setState({ syncMessage: "Update installed and will be applied on restart.", progress: false });
+            break;
+          case CodePush.SyncStatus.UNKNOWN_ERROR:
+            this.setState({ syncMessage: "An unknown error occurred.", progress: false });
+            break;
+        }
+      },
+      (progress)=>{
+        this.setState({ progress: JSON.stringify(progress) })
+      }
     );
   }
 
@@ -219,7 +287,7 @@ export default class HomeScreen extends React.Component {
               <Text style={{fontSize: 22*w, color: isDrawer?'#368866':'#fff'}}>标签......</Text>
             </View>
           </View>
-          <Text style={{fontSize: 26*w, color: isDrawer?'#fff':'#999'}}>个人说明............</Text>
+          <Text style={{fontSize: 26*w, color: isDrawer?'#fff':'#999'}}>个人说明..................</Text>
         </View>
       </View>
     )

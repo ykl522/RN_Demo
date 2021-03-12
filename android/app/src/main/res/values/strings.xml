@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Demo</string>
+    <string name="CodePushDeploymentKey" translatable="false">E_hIRmvRuAUpsXzYL1Gvdcpxu7Mp01VfNjY-b</string>
 </resources>

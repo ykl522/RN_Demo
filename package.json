@@ -17,6 +17,7 @@
     "moment": "^2.29.1",
     "react": "16.13.1",
     "react-native": "0.63.2",
+    "react-native-code-push": "^7.0.0",
     "react-native-drawer": "^2.5.1",
     "react-native-easy-toast": "^2.0.0",
     "react-native-gesture-handler": "^1.5.1",

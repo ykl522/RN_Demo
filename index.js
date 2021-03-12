@@ -5,6 +5,7 @@ import {LogBox, Alert, AppRegistry} from 'react-native';
 import App from './app/App';
 import {name as appName} from './app.json';
 import { myLog } from './app/util/CStyle';
+import CodePush from 'react-native-code-push'
 // 异常捕获
 global.ErrorUtils.setGlobalHandler((e) => {
     try {
@@ -19,4 +20,5 @@ global.ErrorUtils.setGlobalHandler((e) => {
 // if(!__DEV__){
     LogBox.ignoreAllLogs()
 // }
-AppRegistry.registerComponent(appName, () => App);
+let codePushOptions = { checkFrequency: CodePush.CheckFrequency.MANUAL };
+AppRegistry.registerComponent(appName, () => CodePush(codePushOptions)(App));
